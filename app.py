@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_file, jsonify
+import shutil
 import os
 from PIL import Image
 import cv2
@@ -6,7 +7,7 @@ import json
 import requests
 from collections import defaultdict
 import pandas as pd
-# import ultralytics
+from ultralytics import YOLO
 
 
 app = Flask(__name__)
@@ -74,6 +75,33 @@ def upload_files():
 
     session['uploaded_files'] = uploaded_filenames
     return redirect(url_for('dashboard'))
+
+
+# @app.route('/move-images')
+def move_images():
+    source_dir = 'runs/detect/predict'
+    destination_dir = 'static/saved_images'
+
+    # Ensure the destination directory exists
+    os.makedirs(destination_dir, exist_ok=True)
+
+    # List all files in the source directory
+    files = os.listdir(source_dir)
+
+    # Filter for image files (optional, based on your requirements)
+    image_files = [file for file in files if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    # Move each file to the destination directory
+    for file in image_files:
+        source_path = os.path.join(source_dir, file)
+        destination_path = os.path.join(destination_dir, file)
+        shutil.move(source_path, destination_path)
+
+    # After moving the files, delete the 'predict' folder
+    shutil.rmtree(source_dir)
+
+    return jsonify({"message": f"Moved {len(image_files)} images and deleted the 'predict' folder."})
+
 
 # Function to delete image files
 def delete_image_files():
@@ -238,9 +266,59 @@ def detect_objects():
     image_detection()
     return redirect(url_for('dashboard'))
 
-
 @app.route('/detect', methods=['POST'])
 def image_detection():
+    class_lst = ['door', 'ceilinglight', 'window', 'outlet', 'cabinet', 'lightswitch', 'ceilingfan', 'blinds', 'sink',
+                 'tree', 'yard', 'closet', 'vanity', 'mirror', 'toilet', 'fridge', 'garagedoor', 'fence', 'furnace',
+                 'kitchenrange', 'shower', 'fireplace', 'dishwasher', 'waterheater', 'deck', 'microwave',
+                 'garagedooropener', 'clothesdryer', 'AC', 'clotheswasher', 'shed', 'gate', 'porchlight', 'sumppump']
+
+    folder_path = 'uploads/resized'
+    # folder_path = '/home/kwayne/PycharmProjects/Flask_Website/uploads/resized/'
+    files = os.listdir(folder_path)
+    num_images = len(files)
+
+    # Run inference on each image
+    model = YOLO("housing_model-2024-01-16.pt")
+    results = model.predict(source=folder_path, save=True)
+    # results = model.predict(source=folder_path)
+    # Create an empty dataframe
+    df = pd.DataFrame(columns=['Image'] + class_lst)
+    j = 0
+    while j < num_images:
+        r = results[j]  # only one result as only one image was inferred
+        class_names = r.names
+
+        # Initialize the dictionary with zeros for all object classes
+        image_dict_classes = defaultdict(int)
+        for obj_class in class_lst:
+            image_dict_classes[obj_class] = 0
+
+        for b in r.boxes:
+            ten_str = str(b.cls)
+            ten_str = int(ten_str[8:-3])
+            obj_class = class_names[ten_str]
+            # obj_class = obj['name']
+            image_dict_classes[obj_class] += 1
+
+        row = {'Image': files[j]}
+        row.update(image_dict_classes)
+        df = pd.concat([df, pd.DataFrame(row, index=[0])], ignore_index=True)
+        j += 1
+
+    # Replace NaN values with zeros
+    df.fillna(0, inplace=True)
+
+    # Print the resulting dataframe
+    csv_file = 'Object_Report.csv'
+    df.to_csv(csv_file, index=False)
+    print(df)
+    move_images()
+    data_report()
+
+
+
+def image_detection_old():
     url = "https://api.ultralytics.com/v1/predict/K3yIPEs0S2kYpJ1h2BSh"
     headers = {"x-api-key": "66c354f9eaa5a98b6c9ad54978429cf4c3919c452b"}
     data = {"size": 640, "confidence": 0.25, "iou": 0.45}
@@ -662,10 +740,11 @@ def image_display():
             image_path = os.path.join(image_folder, filename)
             image_path = image_path.replace('\\', '/')
             image_path = image_path.replace('static/', '')
+            print(image_path)
             image_urls.append(image_path)
 
     # Store the variable in the session
-    print(image_urls)
+    # print(image_urls)
     session['image_urls'] = image_urls
 
     # Flash a success message
