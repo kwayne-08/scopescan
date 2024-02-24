@@ -525,7 +525,6 @@ def save_image_with_bounding_boxes(image_path, bounding_boxes, names, output_img
 def scope_report():
     # Load object report
     csv_file = 'Object_Report_Totals.csv'
-    csv_tmp = 'resources/FUll_HRG_Template_Zero_Quanity-Beta_master.csv'
     obj_report = pd.read_csv(csv_file)
     obj_report = obj_report.iloc[[0, 1, -1]].reset_index(drop=True)
     # Load class list
@@ -542,6 +541,7 @@ def scope_report():
         csv_temp = 'reports/HRG_SCOPE_REPORT.csv'
         df = pd.read_csv(csv_temp)
     else:
+        csv_tmp = 'resources/FUll_HRG_Template_Zero_Quanity-Beta_master.csv'
         df = pd.read_csv(csv_tmp)
         df = df.fillna('----')
         csv_temp = 'reports/HRG_SCOPE_REPORT.csv'
@@ -551,7 +551,9 @@ def scope_report():
     prj_addr = str(obj_report.loc[0, 'Image']) + ' ' + str(obj_report.loc[0, 'door']) + ' ' + str(obj_report.loc[0, 'ceilinglight']) + ' ' + str(obj_report.loc[0, 'window']) + ' ' + str(obj_report.loc[0, 'outlet'])
     room_sel = str(obj_report.loc[1, 'Image']) + ' ' + str(obj_report.loc[1, 'door']) + ' ' + str(obj_report.loc[1, 'ceilinglight'])
     prj_addr = prj_addr.replace('nan', '')
-    room_sel = room_sel.replace('nan', '').strip()
+    room_sel = room_sel.replace('nan', '')
+    room_sel = room_sel.replace('----', '').strip()
+    print(f'================= Room Selection: {room_sel} ======================')
 
     if room_sel == 'Master Bedroom':
         master_bedroom(obj_report, c_list, df)
@@ -559,6 +561,8 @@ def scope_report():
         main_floor_bath(obj_report, c_list, df)
     if room_sel == 'Kitchen':
         kitchen(obj_report, c_list, df)
+    if room_sel == 'Multi-Room':
+        multi_room(obj_report, c_list, df)
 
 def master_bedroom(obj_report, c_list, df):
     blinds = int(obj_report.loc[2, 'blinds'])
@@ -590,7 +594,7 @@ def master_bedroom(obj_report, c_list, df):
 
     # Save the dataframe to a CSV file
     out_path = 'reports/HRG_SCOPE_REPORT.csv'
-    df.to_csv(out_path, index=False)
+    df.to_csv(out_path, index=True)
 
 def main_floor_bath(obj_report, c_list, df):
     door = int(obj_report.loc[2, 'door'])
@@ -665,6 +669,74 @@ def kitchen(obj_report, c_list, df):
     if kitchenrange > 0:
         df.loc[620, 'Quantity'] = kitchenrange
 
+    # Save the dataframe to a CSV file
+    out_path = 'reports/HRG_SCOPE_REPORT.csv'
+    df.to_csv(out_path, index=False)
+
+
+def multi_room(obj_report, c_list, df):
+    door = int(obj_report.loc[2, 'door'])
+    df.loc[264, 'Quantity'] = int(door)
+    closet = int(obj_report.loc[2, 'closet'])
+    df.loc[285, 'Quantity'] = int(closet)
+    blinds = int(obj_report.loc[2, 'blinds'])
+    df.loc[371, 'Quantity'] = int(blinds)
+    outlet = int(obj_report.loc[2, 'outlet'])
+    df.loc[354, 'Quantity'] = int(outlet)
+    lightswitch = int(obj_report.loc[2, 'lightswitch'])
+    df.loc[351, 'Quantity'] = int(lightswitch)
+    vanity = int(obj_report.loc[2, 'vanity'])
+    df.loc[257, 'Quantity'] = int(vanity)
+    sink = int(obj_report.loc[2, 'sink'])
+    df.loc[255, 'Quantity'] = int(sink)
+    fridge = int(obj_report.loc[2, 'fridge'])
+    df.loc[315, 'Quantity'] = int(fridge)
+    shower = int(obj_report.loc[2, 'shower'])
+    df.loc[241, 'Quantity'] = int(shower)
+    toilet = int(obj_report.loc[2, 'toilet'])
+    df.loc[243, 'Quantity'] = int(toilet)
+    ceilinglight = int(obj_report.loc[2, 'ceilinglight'])
+    df.loc[336, 'Quantity'] = int(ceilinglight)
+    ceilingfan = int(obj_report.loc[2, 'ceilingfan'])
+    df.loc[335, 'Quantity'] = int(ceilingfan)
+    window = int(obj_report.loc[2, 'window'])
+    df.loc[362, 'Quantity'] = int(window)
+    cabinet = int(obj_report.loc[2, 'cabinet'])
+    df.loc[389, 'Quantity'] = int(cabinet)
+    kitchenrange = int(obj_report.loc[2, 'kitchenrange'])
+    df.loc[317, 'Quantity'] = int(kitchenrange)
+    """
+    if door > 0:
+        df.loc[264, 'Quantity'] = int(door)
+    if closet > 0:
+        df.loc[285, 'Quantity'] = int(closet)
+    if blinds > 0:
+        df.loc[371, 'Quantity'] = int(blinds)
+    if outlet > 0:
+        df.loc[354, 'Quantity'] = int(outlet)
+    if lightswitch > 0:
+        df.loc[351, 'Quantity'] = int(lightswitch)
+    if vanity > 0:
+        df.loc[257, 'Quantity'] = int(vanity)
+    if sink > 0:
+        df.loc[255, 'Quantity'] = int(sink)
+    if fridge > 0:
+        df.loc[315, 'Quantity'] = int(fridge)
+    if shower > 0:
+        df.loc[241, 'Quantity'] = int(shower)
+    if toilet > 0:
+        df.loc[243, 'Quantity'] = int(toilet)
+    if ceilinglight > 0:
+        df.loc[336, 'Quantity'] = int(ceilinglight)
+    if ceilingfan > 0:
+        df.loc[335, 'Quantity'] = int(ceilingfan)
+    if window > 0:
+        df.loc[362, 'Quantity'] = int(window)
+    if cabinet > 0:
+        df.loc[389, 'Quantity'] = int(cabinet)
+    if kitchenrange > 0:
+        df.loc[317, 'Quantity'] = int(kitchenrange)
+    """
     # Save the dataframe to a CSV file
     out_path = 'reports/HRG_SCOPE_REPORT.csv'
     df.to_csv(out_path, index=False)
