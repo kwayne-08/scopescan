@@ -288,6 +288,7 @@ def image_detection():
     while j < num_images:
         r = results[j]  # only one result as only one image was inferred
         class_names = r.names
+        img_pth = r.path.split('/')
 
         # Initialize the dictionary with zeros for all object classes
         image_dict_classes = defaultdict(int)
@@ -300,8 +301,9 @@ def image_detection():
             obj_class = class_names[ten_str]
             # obj_class = obj['name']
             image_dict_classes[obj_class] += 1
+            obj_class = ''
 
-        row = {'Image': files[j]}
+        row = {'Image': img_pth[7]}
         row.update(image_dict_classes)
         df = pd.concat([df, pd.DataFrame(row, index=[0])], ignore_index=True)
         j += 1
