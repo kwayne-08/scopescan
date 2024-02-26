@@ -243,15 +243,15 @@
                   <p class="u-text u-text-4" style="margin-top: 1%">
 
              <p><label> Enter Project Street Address: <input style="" type="text" name="address"> </label></p>
-                    <p>Select Room for Uploaded Images:
+                    <p style="font-weight:bold">Select Option:</p>
                    <div align="left" style="margin-left:40%; margin-top: -1%">
-                     <label><input type="radio" name="room" value="Master Bedroom">&nbsp;Master Bedroom</label><br>
-                    <label><input type="radio" name="room" value="Main Floor Bath">&nbsp;Main Floor Bath</label><br>
-                    <label><input type="radio" name="room" value="Kitchen">&nbsp;Kitchen</label><br>
-                    <label><input type="radio" name="room" value="Multi-Room">&nbsp;Multi-Room</label></p>
+                     <label><input type="radio" name="room" value="Multi-Room" style="font-size:14pt">&nbsp;Whole House </label><br><br>
+
+                    <label><input type="radio" name="room" value="Multi-Room" style="font-size:14pt"> Single Room </label>
+                       <ul><label> Single Room Name: <input style="" type="text" name="rm_name"> </label</ul>
                    </div>
                  <input type="submit" value="Upload">
-                    </form></p>
+                    </form>
                     {% with messages1 = get_flashed_messages(category_filter=['upload']) %}
                       {% if messages1 %}
                         <ul class="flashes">

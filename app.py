@@ -40,12 +40,14 @@ def home():
 def upload_files():
     proj_addr = request.form.get('address')
     selected_room = request.form.get('room')
+    room_nm = request.form.get('rm_name')
     uploaded_files = request.files.getlist("file[]")
     iffiles = request.files['file[]'].filename
 
     if proj_addr and selected_room and iffiles != '':
         session['sel_room'] = selected_room
         session['proj_addr'] = proj_addr
+        session['room_nm'] = room_nm
         flash(f'Your files uploaded successfully.', 'upload')
         uploaded_filenames = []
         session['delete_files'] = ''
@@ -197,6 +199,7 @@ def delete_image_files():
     session.pop('image_urls', None)
     session.pop('sel_room', None)
     session.pop('proj_addr', None)
+    session.pop('room_nm', None)
     session.pop('hrg_template', None)
     session.pop('csv_complete', None)
 
@@ -320,85 +323,85 @@ def image_detection():
 
 
 
-def image_detection_old():
-    url = "https://api.ultralytics.com/v1/predict/K3yIPEs0S2kYpJ1h2BSh"
-    headers = {"x-api-key": "66c354f9eaa5a98b6c9ad54978429cf4c3919c452b"}
-    data = {"size": 640, "confidence": 0.25, "iou": 0.45}
-
-    class_lst = ['door', 'ceilinglight', 'window', 'outlet', 'cabinet', 'lightswitch', 'ceilingfan', 'blinds', 'sink',
-                 'tree', 'yard', 'closet', 'vanity', 'mirror', 'toilet', 'fridge', 'garagedoor', 'fence', 'furnace',
-                 'kitchenrange', 'shower', 'fireplace', 'dishwasher', 'waterheater', 'deck', 'microwave',
-                 'garagedooropener', 'clothesdryer', 'AC', 'clotheswasher', 'shed', 'gate', 'porchlight', 'sumppump']
-
-    folder_path = 'uploads/resized'
-    output_path = 'static/saved_images'
-    files = os.listdir(folder_path)
-
-    # Create an empty dataframe
-    df = pd.DataFrame(columns=['Image'] + class_lst)
-
-    # Run inference on each image
-    for file in files:
-        img_file = f'{folder_path}/{file}'
-        image_dict_classes = defaultdict(int)
-
-        # Initialize the dictionary with zeros for all object classes
-        for obj_class in class_lst:
-            image_dict_classes[obj_class] = 0
-
-        with open(img_file, "rb") as f:
-            response = requests.post(url, headers=headers, data=data, files={"image": f})
-
-        # Check for successful response
-        response.raise_for_status()
-
-        # Print inference results
-        # json_str = json.dumps(response.json(), indent=2)
-
-        # json_obj = json.loads(json_str)
-        # Parse the inference results
-        json_obj = json.loads(response.content)
-
-        # ==========================================
-        bounding_boxes = []
-        names = []
-        for key, value in json_obj.items():
-            if key == 'data':
-                for obj in value:
-                    labels = obj['name']
-                    h = obj['height']
-                    w = obj['width']
-                    x = obj['xcenter']
-                    y = obj['ycenter']
-                    bounding_box = (x, y, w, h)
-                    names.append(labels)
-                    bounding_boxes.append(bounding_box)
-        output_img = f'{output_path}/{file}'
-        save_image_with_bounding_boxes(img_file, bounding_boxes, names, output_img)
-        # print(file, labels, bounding_boxes)
-
-        # ========================================
-
-        # Count the occurrences of each object class
-        for key, value in json_obj.items():
-            if isinstance(value, list):
-                for obj in value:
-                    # obj_class = value[0]['name']
-                    obj_class = obj['name']
-                    image_dict_classes[obj_class] += 1
-
-        row = {'Image': file}
-        row.update(image_dict_classes)
-        df = pd.concat([df, pd.DataFrame(row, index=[0])], ignore_index=True)
-
-    # Replace NaN values with zeros
-    df.fillna(0, inplace=True)
-
-    # Print the resulting dataframe
-    csv_file = 'Object_Report.csv'
-    df.to_csv(csv_file, index=False)
-    print(df)
-    data_report()
+# def image_detection_old():
+#     url = "https://api.ultralytics.com/v1/predict/K3yIPEs0S2kYpJ1h2BSh"
+#     headers = {"x-api-key": "66c354f9eaa5a98b6c9ad54978429cf4c3919c452b"}
+#     data = {"size": 640, "confidence": 0.25, "iou": 0.45}
+#
+#     class_lst = ['door', 'ceilinglight', 'window', 'outlet', 'cabinet', 'lightswitch', 'ceilingfan', 'blinds', 'sink',
+#                  'tree', 'yard', 'closet', 'vanity', 'mirror', 'toilet', 'fridge', 'garagedoor', 'fence', 'furnace',
+#                  'kitchenrange', 'shower', 'fireplace', 'dishwasher', 'waterheater', 'deck', 'microwave',
+#                  'garagedooropener', 'clothesdryer', 'AC', 'clotheswasher', 'shed', 'gate', 'porchlight', 'sumppump']
+#
+#     folder_path = 'uploads/resized'
+#     output_path = 'static/saved_images'
+#     files = os.listdir(folder_path)
+#
+#     # Create an empty dataframe
+#     df = pd.DataFrame(columns=['Image'] + class_lst)
+#
+#     # Run inference on each image
+#     for file in files:
+#         img_file = f'{folder_path}/{file}'
+#         image_dict_classes = defaultdict(int)
+#
+#         # Initialize the dictionary with zeros for all object classes
+#         for obj_class in class_lst:
+#             image_dict_classes[obj_class] = 0
+#
+#         with open(img_file, "rb") as f:
+#             response = requests.post(url, headers=headers, data=data, files={"image": f})
+#
+#         # Check for successful response
+#         response.raise_for_status()
+#
+#         # Print inference results
+#         # json_str = json.dumps(response.json(), indent=2)
+#
+#         # json_obj = json.loads(json_str)
+#         # Parse the inference results
+#         json_obj = json.loads(response.content)
+#
+#         # ==========================================
+#         bounding_boxes = []
+#         names = []
+#         for key, value in json_obj.items():
+#             if key == 'data':
+#                 for obj in value:
+#                     labels = obj['name']
+#                     h = obj['height']
+#                     w = obj['width']
+#                     x = obj['xcenter']
+#                     y = obj['ycenter']
+#                     bounding_box = (x, y, w, h)
+#                     names.append(labels)
+#                     bounding_boxes.append(bounding_box)
+#         output_img = f'{output_path}/{file}'
+#         save_image_with_bounding_boxes(img_file, bounding_boxes, names, output_img)
+#         # print(file, labels, bounding_boxes)
+#
+#         # ========================================
+#
+#         # Count the occurrences of each object class
+#         for key, value in json_obj.items():
+#             if isinstance(value, list):
+#                 for obj in value:
+#                     # obj_class = value[0]['name']
+#                     obj_class = obj['name']
+#                     image_dict_classes[obj_class] += 1
+#
+#         row = {'Image': file}
+#         row.update(image_dict_classes)
+#         df = pd.concat([df, pd.DataFrame(row, index=[0])], ignore_index=True)
+#
+#     # Replace NaN values with zeros
+#     df.fillna(0, inplace=True)
+#
+#     # Print the resulting dataframe
+#     csv_file = 'Object_Report.csv'
+#     df.to_csv(csv_file, index=False)
+#     print(df)
+#     data_report()
 
 
 def data_report():
@@ -441,15 +444,22 @@ def man_col_ttls():
 
 
     room_sel = room_selection.split(" ")  # Splitting the string by space
+    room_name = session['room_nm'].split(" ")
+    str_len2 = len(room_name)
     str_len = len(room_sel)
+    if str_len2 == 0:
+        room_rw = room_sel
+    else:
+        room_rw = room_name
+        str_len = str_len2
 
     rm_row = []
-    for r in room_sel:
+    for r in room_rw:
         rm_row.append(r)
 
     i = 0
     while i < 36 - str_len:
-        rm_row.append('----')
+        rm_row.append('____')
         i += 1
 
     df.loc[-1] = rm_row
@@ -458,7 +468,6 @@ def man_col_ttls():
     df = df.sort_index()
 
     # Add an address row to the DataFrame
-    # addr = '302 East 123rd Terr'
     addr = session['proj_addr']
     addr = addr.split(" ")
     str_len = len(addr)
@@ -469,7 +478,7 @@ def man_col_ttls():
 
     i = 0
     while i < 36 - str_len:
-        addr_row.append('----')
+        addr_row.append('____')
         i += 1
 
     df.loc[-1] = addr_row
@@ -499,31 +508,6 @@ def man_col_ttls():
     image_display()
     # return redirect(url_for('dashboard'))
 
-def save_image_with_bounding_boxes(image_path, bounding_boxes, names, output_img):
-    # Load the image
-    # print(f'save {output_img}')
-    image = cv2.imread(image_path)
-    height, width, _ = image.shape
-    print(image_path, names, bounding_boxes)
-    # Draw bounding boxes on the image
-    i = 0
-    for (x, y, w, h) in bounding_boxes:
-        # print(f'COOR-1: {x}, {y}, {w}, {h}')
-        name = str(names[i])
-        i += 1
-        x = int(x * width)
-        y = int(y * height)
-        w = int(w * width)
-        h = int(h * height)
-        x, y, w, h = int(x), int(y), int(w), int(h)  # Convert to integers
-        x = x - 25
-        y = y - 35
-        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        cv2.putText(image, name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-
-    # Save the image with bounding boxes
-    cv2.imwrite(output_img, image)
-
 def scope_report():
     # Load object report
     csv_file = 'Object_Report_Totals.csv'
@@ -545,7 +529,7 @@ def scope_report():
     else:
         csv_tmp = 'resources/FUll_HRG_Template_Zero_Quanity-Beta_master.csv'
         df = pd.read_csv(csv_tmp)
-        df = df.fillna('----')
+        df = df.fillna('0')
         csv_temp = 'reports/HRG_SCOPE_REPORT.csv'
         df.to_csv(csv_temp, index=False)
         session['hrg_template'] = 'yes'
@@ -554,17 +538,114 @@ def scope_report():
     room_sel = str(obj_report.loc[1, 'Image']) + ' ' + str(obj_report.loc[1, 'door']) + ' ' + str(obj_report.loc[1, 'ceilinglight'])
     prj_addr = prj_addr.replace('nan', '')
     room_sel = room_sel.replace('nan', '')
-    room_sel = room_sel.replace('----', '').strip()
+    room_sel = room_sel.replace('____', '').strip()
     print(f'================= Room Selection: {room_sel} ======================')
 
-    if room_sel == 'Master Bedroom':
-        master_bedroom(obj_report, c_list, df)
-    if room_sel == 'Main Floor Bath':
-        main_floor_bath(obj_report, c_list, df)
-    if room_sel == 'Kitchen':
-        kitchen(obj_report, c_list, df)
+    # if room_sel == 'Master Bedroom':
+    #     master_bedroom(obj_report, c_list, df)
+    # if room_sel == 'Main Floor Bath':
+    #     main_floor_bath(obj_report, c_list, df)
+    # if room_sel == 'Kitchen':
+    #     kitchen(obj_report, c_list, df)
     if room_sel == 'Multi-Room':
         multi_room(obj_report, c_list, df)
+
+
+def multi_room(obj_report, c_list, df):
+    # INTERIOR ===========================
+    blinds = int(obj_report.loc[2, 'blinds'])
+    df.loc[371, 'Quantity'] = int(blinds)
+
+    cabinet = int(obj_report.loc[2, 'cabinet'])
+    df.loc[389, 'Quantity'] = int(cabinet)
+
+    ceilingfan = int(obj_report.loc[2, 'ceilingfan'])
+    df.loc[335, 'Quantity'] = int(ceilingfan)
+
+    ceilinglight = int(obj_report.loc[2, 'ceilinglight'])
+    df.loc[336, 'Quantity'] = int(ceilinglight)
+
+    closet = int(obj_report.loc[2, 'closet'])
+    df.loc[285, 'Quantity'] = int(closet)
+
+    door = int(obj_report.loc[2, 'door'])
+    df.loc[264, 'Quantity'] = int(door)
+
+    fridge = int(obj_report.loc[2, 'fridge'])
+    df.loc[315, 'Quantity'] = int(fridge)
+
+    kitchenrange = int(obj_report.loc[2, 'kitchenrange'])
+    df.loc[317, 'Quantity'] = int(kitchenrange)
+
+    lightswitch = int(obj_report.loc[2, 'lightswitch'])
+    df.loc[351, 'Quantity'] = int(lightswitch)
+
+    outlet = int(obj_report.loc[2, 'outlet'])
+    df.loc[354, 'Quantity'] = int(outlet)
+
+    shower = int(obj_report.loc[2, 'shower'])
+    df.loc[241, 'Quantity'] = int(shower)
+
+    sink = int(obj_report.loc[2, 'sink'])
+    df.loc[255, 'Quantity'] = int(sink)
+
+    toilet = int(obj_report.loc[2, 'toilet'])
+    df.loc[243, 'Quantity'] = int(toilet)
+
+    vanity = int(obj_report.loc[2, 'vanity'])
+    df.loc[257, 'Quantity'] = int(vanity)
+
+    window = int(obj_report.loc[2, 'window'])
+    df.loc[362, 'Quantity'] = int(window)
+
+    # UTILITY: ================================
+    clothesdryer = int(obj_report.loc[2, 'clothesdryer'])
+    df.loc[362, 'Quantity'] = int(clothesdryer)
+
+    clotheswasher = int(obj_report.loc[2, 'clotheswasher'])
+    df.loc[362, 'Quantity'] = int(clotheswasher)
+
+    furnace = int(obj_report.loc[2, 'furnace'])
+    df.loc[362, 'Quantity'] = int(furnace)
+
+    garagedooropener = int(obj_report.loc[2, 'garagedooropener'])
+    df.loc[362, 'Quantity'] = int(garagedooropener)
+
+    sumppump = int(obj_report.loc[2, 'sumppump'])
+    df.loc[362, 'Quantity'] = int(sumppump)
+
+    # EXTERIOR: ================================
+    AC = int(obj_report.loc[2, 'AC'])
+    df.loc[362, 'Quantity'] = int(AC)
+
+    deck = int(obj_report.loc[2, 'deck'])
+    df.loc[362, 'Quantity'] = int(deck)
+
+    fence = int(obj_report.loc[2, 'fence'])
+    df.loc[362, 'Quantity'] = int(fence)
+
+    garagedoor = int(obj_report.loc[2, 'garagedoor'])
+    df.loc[362, 'Quantity'] = int(garagedoor)
+
+    gate = int(obj_report.loc[2, 'gate'])
+    df.loc[362, 'Quantity'] = int(gate)
+
+    porchlight = int(obj_report.loc[2, 'porchlight'])
+    df.loc[362, 'Quantity'] = int(porchlight)
+
+    shed = int(obj_report.loc[2, 'shed'])
+    df.loc[362, 'Quantity'] = int(shed)
+
+    tree = int(obj_report.loc[2, 'tree'])
+    df.loc[362, 'Quantity'] = int(tree)
+
+    yard = int(obj_report.loc[2, 'yard'])
+    df.loc[362, 'Quantity'] = int(yard)
+
+    # Save the dataframe to a CSV file
+    out_path = 'reports/HRG_SCOPE_REPORT.csv'
+    df.to_csv(out_path, index=False)
+
 
 def master_bedroom(obj_report, c_list, df):
     blinds = int(obj_report.loc[2, 'blinds'])
@@ -676,74 +757,6 @@ def kitchen(obj_report, c_list, df):
     df.to_csv(out_path, index=False)
 
 
-def multi_room(obj_report, c_list, df):
-    door = int(obj_report.loc[2, 'door'])
-    df.loc[264, 'Quantity'] = int(door)
-    closet = int(obj_report.loc[2, 'closet'])
-    df.loc[285, 'Quantity'] = int(closet)
-    blinds = int(obj_report.loc[2, 'blinds'])
-    df.loc[371, 'Quantity'] = int(blinds)
-    outlet = int(obj_report.loc[2, 'outlet'])
-    df.loc[354, 'Quantity'] = int(outlet)
-    lightswitch = int(obj_report.loc[2, 'lightswitch'])
-    df.loc[351, 'Quantity'] = int(lightswitch)
-    vanity = int(obj_report.loc[2, 'vanity'])
-    df.loc[257, 'Quantity'] = int(vanity)
-    sink = int(obj_report.loc[2, 'sink'])
-    df.loc[255, 'Quantity'] = int(sink)
-    fridge = int(obj_report.loc[2, 'fridge'])
-    df.loc[315, 'Quantity'] = int(fridge)
-    shower = int(obj_report.loc[2, 'shower'])
-    df.loc[241, 'Quantity'] = int(shower)
-    toilet = int(obj_report.loc[2, 'toilet'])
-    df.loc[243, 'Quantity'] = int(toilet)
-    ceilinglight = int(obj_report.loc[2, 'ceilinglight'])
-    df.loc[336, 'Quantity'] = int(ceilinglight)
-    ceilingfan = int(obj_report.loc[2, 'ceilingfan'])
-    df.loc[335, 'Quantity'] = int(ceilingfan)
-    window = int(obj_report.loc[2, 'window'])
-    df.loc[362, 'Quantity'] = int(window)
-    cabinet = int(obj_report.loc[2, 'cabinet'])
-    df.loc[389, 'Quantity'] = int(cabinet)
-    kitchenrange = int(obj_report.loc[2, 'kitchenrange'])
-    df.loc[317, 'Quantity'] = int(kitchenrange)
-    """
-    if door > 0:
-        df.loc[264, 'Quantity'] = int(door)
-    if closet > 0:
-        df.loc[285, 'Quantity'] = int(closet)
-    if blinds > 0:
-        df.loc[371, 'Quantity'] = int(blinds)
-    if outlet > 0:
-        df.loc[354, 'Quantity'] = int(outlet)
-    if lightswitch > 0:
-        df.loc[351, 'Quantity'] = int(lightswitch)
-    if vanity > 0:
-        df.loc[257, 'Quantity'] = int(vanity)
-    if sink > 0:
-        df.loc[255, 'Quantity'] = int(sink)
-    if fridge > 0:
-        df.loc[315, 'Quantity'] = int(fridge)
-    if shower > 0:
-        df.loc[241, 'Quantity'] = int(shower)
-    if toilet > 0:
-        df.loc[243, 'Quantity'] = int(toilet)
-    if ceilinglight > 0:
-        df.loc[336, 'Quantity'] = int(ceilinglight)
-    if ceilingfan > 0:
-        df.loc[335, 'Quantity'] = int(ceilingfan)
-    if window > 0:
-        df.loc[362, 'Quantity'] = int(window)
-    if cabinet > 0:
-        df.loc[389, 'Quantity'] = int(cabinet)
-    if kitchenrange > 0:
-        df.loc[317, 'Quantity'] = int(kitchenrange)
-    """
-    # Save the dataframe to a CSV file
-    out_path = 'reports/HRG_SCOPE_REPORT.csv'
-    df.to_csv(out_path, index=False)
-
-
 # @app.route('/', methods=['GET', 'POST'])
 @app.route('/', methods=['POST'])
 def login():
@@ -825,6 +838,33 @@ def image_display():
     flash('Scan process Completed!', 'scan')
     scope_report()
     return redirect('/dashboard')
+
+
+# def save_image_with_bounding_boxes(image_path, bounding_boxes, names, output_img):
+#     # Load the image
+#     # print(f'save {output_img}')
+#     image = cv2.imread(image_path)
+#     height, width, _ = image.shape
+#     print(image_path, names, bounding_boxes)
+#     # Draw bounding boxes on the image
+#     i = 0
+#     for (x, y, w, h) in bounding_boxes:
+#         # print(f'COOR-1: {x}, {y}, {w}, {h}')
+#         name = str(names[i])
+#         i += 1
+#         x = int(x * width)
+#         y = int(y * height)
+#         w = int(w * width)
+#         h = int(h * height)
+#         x, y, w, h = int(x), int(y), int(w), int(h)  # Convert to integers
+#         x = x - 25
+#         y = y - 35
+#         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+#         cv2.putText(image, name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+#
+#     # Save the image with bounding boxes
+#     cv2.imwrite(output_img, image)
+
 
 
 
