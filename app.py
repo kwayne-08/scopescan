@@ -1,10 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_file, jsonify
 import shutil
 import os
-from PIL import Image
-import cv2
-import json
-import requests
+from PIL import Image, ImageOps
+from werkzeug.utils import secure_filename
 from collections import defaultdict
 import pandas as pd
 from ultralytics import YOLO
@@ -14,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = '18dj395'
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['RESIZED_FOLDER'] = os.path.join(app.config['UPLOAD_FOLDER'], 'resized')
 
 # Ensure the upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -52,22 +51,46 @@ def upload_files():
         uploaded_filenames = []
         session['delete_files'] = ''
         for file in uploaded_files:
-            if file:
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-                uploaded_filenames.append(file.filename)
-                # Resize the image
-                image_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-                image = Image.open(image_path)
-                new_width = 640
-                new_height = 320
-                resized_image = image.resize((new_width, new_height))
-                # Define the resized image path
-                resized_folder = 'uploads/resized'
-                resized_image_path = os.path.join(resized_folder, file.filename)
-                # Save the resized image
-                resized_image.save(resized_image_path)
-                # Add the name of the resized image to the list
-                resized_images.append(file.filename)
+            if file.filename == '':
+                continue  # Skip empty files
+
+            filename = secure_filename(file.filename)
+            filename = filename.replace(" ", "_")  # Replace spaces with underscores
+            uploaded_filenames.append(filename)  # Add the processed filename to the list
+
+            # Save the original file (optional)
+            original_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(original_path)
+
+            # Resize and save the image
+            image = Image.open(original_path)
+            image = image.resize((640, 320), Image.Resampling.LANCZOS)  # Use Image.Resampling.LANCZOS
+            resized_path = os.path.join(app.config['RESIZED_FOLDER'], filename)
+            image.save(resized_path)
+
+
+            # if file:
+            #     filename = secure_filename(file.filename)
+            #     filename = filename.replace(" ", "_")
+            #     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            #     file.save(file_path)  # Save the file to the specified location
+            #
+            #     uploaded_filenames.append(file.filename)
+            #     print(uploaded_filenames)
+            # Resize the image
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            # image = Image.open(image_path)
+            # image = Image.open(uploaded_filenames)
+            # new_width = 640
+            # new_height = 320
+            # resized_image = image.resize((new_width, new_height))
+            # # Define the resized image path
+            # resized_folder = 'uploads/resized'
+            # resized_image_path = os.path.join(resized_folder, file.filename)
+            # # Save the resized image
+            # resized_image.save(resized_image_path)
+            # # Add the name of the resized image to the list
+            # resized_images.append(file.filename)
     else:
         if iffiles == '':
             flash(f'Be sure to select one or more image files', 'upload')
@@ -823,7 +846,7 @@ def image_display():
     image_urls = []
 
     for filename in os.listdir(image_folder):
-        if filename.endswith('.jpg') or filename.endswith('.png'):
+        if filename.endswith('.jpg') or filename.endswith('.jpeg') or filename.endswith('.png'):
             image_path = os.path.join(image_folder, filename)
             image_path = image_path.replace('\\', '/')
             image_path = image_path.replace('static/', '')
