@@ -574,52 +574,57 @@ def scope_report():
         multi_room(obj_report, c_list, df)
 
 
-def multi_room(obj_report, c_list, df):
-    # INTERIOR ===========================
+# INTERIOR ===========================
     blinds = int(obj_report.loc[2, 'blinds'])
-    df.loc[371, 'Quantity'] = int(blinds)
+    df.loc[379, 'Quantity'] = int(blinds)  # xx
 
     cabinet = int(obj_report.loc[2, 'cabinet'])
-    df.loc[389, 'Quantity'] = int(cabinet)
+    df.loc[387, 'Quantity'] = int(cabinet)  # xx
 
     ceilingfan = int(obj_report.loc[2, 'ceilingfan'])
-    df.loc[335, 'Quantity'] = int(ceilingfan)
+    df.loc[345, 'Quantity'] = int(ceilingfan)  # xx
 
     ceilinglight = int(obj_report.loc[2, 'ceilinglight'])
-    df.loc[336, 'Quantity'] = int(ceilinglight)
+    df.loc[349, 'Quantity'] = int(ceilinglight)  # xx
 
     closet = int(obj_report.loc[2, 'closet'])
-    df.loc[285, 'Quantity'] = int(closet)
+    df.loc[293, 'Quantity'] = int(closet)  # xx
+
+    dishwasher = int(obj_report.loc[2, 'dishwasher'])
+    df.loc[328, 'Quantity'] = int(dishwasher)  # xx
 
     door = int(obj_report.loc[2, 'door'])
     df.loc[264, 'Quantity'] = int(door)
 
     fridge = int(obj_report.loc[2, 'fridge'])
-    df.loc[315, 'Quantity'] = int(fridge)
+    df.loc[325, 'Quantity'] = int(fridge)  # xx
 
     kitchenrange = int(obj_report.loc[2, 'kitchenrange'])
-    df.loc[317, 'Quantity'] = int(kitchenrange)
+    df.loc[327, 'Quantity'] = int(kitchenrange)  # xx
 
     lightswitch = int(obj_report.loc[2, 'lightswitch'])
-    df.loc[351, 'Quantity'] = int(lightswitch)
+    df.loc[361, 'Quantity'] = int(lightswitch)  # xx
+
+    mirror = int(obj_report.loc[2, 'mirror'])
+    df.loc[246, 'Quantity'] = int(mirror)  # xx
 
     outlet = int(obj_report.loc[2, 'outlet'])
-    df.loc[354, 'Quantity'] = int(outlet)
+    df.loc[362, 'Quantity'] = int(outlet)  # xx
 
     shower = int(obj_report.loc[2, 'shower'])
-    df.loc[241, 'Quantity'] = int(shower)
+    df.loc[251, 'Quantity'] = int(shower)  # xx
 
     sink = int(obj_report.loc[2, 'sink'])
-    df.loc[255, 'Quantity'] = int(sink)
+    df.loc[262, 'Quantity'] = int(sink)  # xx
 
     toilet = int(obj_report.loc[2, 'toilet'])
-    df.loc[243, 'Quantity'] = int(toilet)
+    df.loc[252, 'Quantity'] = int(toilet)  # xx
 
     vanity = int(obj_report.loc[2, 'vanity'])
-    df.loc[257, 'Quantity'] = int(vanity)
+    df.loc[262, 'Quantity'] = int(vanity)  # xx
 
     window = int(obj_report.loc[2, 'window'])
-    df.loc[362, 'Quantity'] = int(window)
+    df.loc[362, 'Quantity'] = int(window)  # ??
 
     # UTILITY: ================================
     clothesdryer = int(obj_report.loc[2, 'clothesdryer'])
@@ -629,13 +634,16 @@ def multi_room(obj_report, c_list, df):
     df.loc[362, 'Quantity'] = int(clotheswasher)
 
     furnace = int(obj_report.loc[2, 'furnace'])
-    df.loc[362, 'Quantity'] = int(furnace)
+    df.loc[239, 'Quantity'] = int(furnace)  # xx
 
     garagedooropener = int(obj_report.loc[2, 'garagedooropener'])
-    df.loc[362, 'Quantity'] = int(garagedooropener)
+    df.loc[204, 'Quantity'] = int(garagedooropener)  # xx
 
     sumppump = int(obj_report.loc[2, 'sumppump'])
     df.loc[362, 'Quantity'] = int(sumppump)
+
+    waterheater = int(obj_report.loc[2, 'waterheater'])
+    df.loc[362, 'Quantity'] = int(waterheater)  # xx
 
     # EXTERIOR: ================================
     AC = int(obj_report.loc[2, 'AC'])
@@ -645,25 +653,25 @@ def multi_room(obj_report, c_list, df):
     df.loc[362, 'Quantity'] = int(deck)
 
     fence = int(obj_report.loc[2, 'fence'])
-    df.loc[362, 'Quantity'] = int(fence)
+    df.loc[174, 'Quantity'] = int(fence)  # xx
 
     garagedoor = int(obj_report.loc[2, 'garagedoor'])
-    df.loc[362, 'Quantity'] = int(garagedoor)
+    df.loc[204, 'Quantity'] = int(garagedoor)  # xx
 
     gate = int(obj_report.loc[2, 'gate'])
     df.loc[362, 'Quantity'] = int(gate)
 
     porchlight = int(obj_report.loc[2, 'porchlight'])
-    df.loc[362, 'Quantity'] = int(porchlight)
+    df.loc[76, 'Quantity'] = int(porchlight)  # xx
 
     shed = int(obj_report.loc[2, 'shed'])
     df.loc[362, 'Quantity'] = int(shed)
 
     tree = int(obj_report.loc[2, 'tree'])
-    df.loc[362, 'Quantity'] = int(tree)
+    df.loc[67, 'Quantity'] = int(tree)  # xx
 
     yard = int(obj_report.loc[2, 'yard'])
-    df.loc[362, 'Quantity'] = int(yard)
+    df.loc[6, 'Quantity'] = int(yard)  # xx
 
     # Save the dataframe to a CSV file
     out_path = 'reports/HRG_SCOPE_REPORT.csv'
