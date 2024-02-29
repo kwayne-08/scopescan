@@ -237,8 +237,9 @@
               <div class="u-align-center u-container-style u-layout-cell u-left-cell u-size-42 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
                   <h5 class="u-text u-text-2">Select &amp; Upload photos from your computer</h5>
-                    <p class="u-align-center u-text u-text-3"><form action="{{ url_for('upload_files') }}" method="POST" enctype="multipart/form-data">
-                    <p>Select Files:&nbsp; <input type="file" name="file[]" multiple></p>
+                    <p class="u-align-center u-text u-text-3">
+                    <form action="{{ url_for('upload_files') }}" method="POST" enctype="multipart/form-data" id="upload-form">
+                    <p>Select Files:&nbsp; <input type="file" name="file[]" id="file" multiple></p>
 
                   <p class="u-text u-text-4" style="margin-top: 1%">
 
@@ -252,6 +253,47 @@
                    </div>
                  <input type="submit" value="Upload">
                     </form>
+                 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <div id="progress-bar" style="width:0%; height:20px; margin-top: 3%; background-color:blue; display:none;"></div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#upload-form').submit(function(e) {
+                        e.preventDefault();
+                        var formData = new FormData(this);
+                        $('#progress-bar').show();
+                        $.ajax({
+                            xhr: function() {
+                                var xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function(evt) {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+                                        $('#progress-bar').css('width', percentComplete + '%');
+                                        if (percentComplete === 100) {
+                                            $('#progress-bar').css('background-color', '#34421e');
+                                        }
+                                    }
+                                }, false);
+                                return xhr;
+                            },
+                            url: '/upload',
+                            type: 'POST',
+                            data: formData,
+                            success: function(data) {
+                                // Handle success
+                                alert('Upload Complete');
+                                $('#progress-bar').hide();
+                            },
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                        });
+                    });
+                });
+            </script>
+
+                 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                     {% with messages1 = get_flashed_messages(category_filter=['upload']) %}
                       {% if messages1 %}
                         <ul class="flashes">
@@ -337,7 +379,7 @@
               </div>
               <!-- CONTAINER FOR REMOVE BUTTON ----------------------------- -->
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
-                <div class="u-container-layout u-container-layout-2" style="margin-top:6%; margin-left: 20%">
+                <div class="u-container-layout u-container-layout-2" style="margin-top:.5%; margin-left: 20%">
                   <h5 class="u-text u-text-default u-text-2">Remove Project </h5>
                   <div class="hover-button1" style="margin-top:30px; margin-left: 20%">
                         <form style="padding-left:1%; " action="/delete" method="post">
@@ -452,6 +494,16 @@
                    <form style="padding-left:-8%; " action="{{ url_for('download_csv') }}" method="post">
                        <input class="hover-button2" style="color: white" type="submit" value="Download Image Report">
                    </form>
+
+                 {% with messages1 = get_flashed_messages(category_filter=['nofile_image']) %}
+                      {% if messages1 %}
+                        <ul class="flashes">
+                          {% for message in messages1 %}
+                            <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
               </div>
                 </div>
 
@@ -462,6 +514,16 @@
                    <form style="padding-left:-12%; " action="{{ url_for('download_csv2') }}" method="post">
                        <input class="hover-button2" style="color: white" type="submit" value="Download SCOPE Report">
                    </form>
+
+                 {% with messages1 = get_flashed_messages(category_filter=['nofile_scope']) %}
+                      {% if messages1 %}
+                        <ul class="flashes">
+                          {% for message in messages1 %}
+                            <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
               </div>
                 </div>
               </div>

@@ -68,29 +68,6 @@ def upload_files():
             resized_path = os.path.join(app.config['RESIZED_FOLDER'], filename)
             image.save(resized_path)
 
-
-            # if file:
-            #     filename = secure_filename(file.filename)
-            #     filename = filename.replace(" ", "_")
-            #     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            #     file.save(file_path)  # Save the file to the specified location
-            #
-            #     uploaded_filenames.append(file.filename)
-            #     print(uploaded_filenames)
-            # Resize the image
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            # image = Image.open(image_path)
-            # image = Image.open(uploaded_filenames)
-            # new_width = 640
-            # new_height = 320
-            # resized_image = image.resize((new_width, new_height))
-            # # Define the resized image path
-            # resized_folder = 'uploads/resized'
-            # resized_image_path = os.path.join(resized_folder, file.filename)
-            # # Save the resized image
-            # resized_image.save(resized_image_path)
-            # # Add the name of the resized image to the list
-            # resized_images.append(file.filename)
     else:
         if iffiles == '':
             flash(f'Be sure to select one or more image files', 'upload')
@@ -797,6 +774,7 @@ def login():
          # Perform authentication logic here (e.g., check username and password against a database)
          if username == 'admin' and password == 'scope&scan':
              session['logged_in'] = True  # Set the session variable
+             delete_image_files()
              return redirect(url_for('dashboard'))
          else:
              return render_template('home.html', error='Invalid credentials')
@@ -839,12 +817,26 @@ def dashboard():
 @app.route('/download_csv', methods=['POST'])
 def download_csv():
     filename = 'Object_Report_Complete.csv'  # Specify the name of the CSV file
-    return send_file(filename, as_attachment=True)
+    try:
+        return send_file(filename, as_attachment=True)
+        print("File downloaded successfully.")
+    except FileNotFoundError:
+        print("File not found.")
+        flash('File Not Found!', 'nofile_image')
+        return redirect('/dashboard')
+
 
 @app.route('/download_csv2', methods=['POST'])
 def download_csv2():
     filename = 'reports/HRG_SCOPE_REPORT.csv'  # Specify the name of the CSV file
-    return send_file(filename, as_attachment=True)
+
+    try:
+        return send_file(filename, as_attachment=True)
+        print("File downloaded successfully.")
+    except FileNotFoundError:
+        print("File not found.")
+        flash('File Not Found!', 'nofile_scope')
+        return redirect('/dashboard')
 
 
 @app.route('/image_display', methods=['GET'])
