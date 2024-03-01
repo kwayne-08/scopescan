@@ -236,10 +236,19 @@
               <!-- CONTAINER FOR FILE UPLOAD & ROOM SELECTION -->
               <div class="u-align-center u-container-style u-layout-cell u-left-cell u-size-42 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
+                    {% with messages1 = get_flashed_messages(category_filter=['image_accept']) %}
+                      {% if messages1 %}
+                        <ul class="flashes">
+                          {% for message in messages1 %}
+                            <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
                   <h5 class="u-text u-text-2">Select &amp; Upload photos from your computer</h5>
                     <p class="u-align-center u-text u-text-3">
                     <form action="{{ url_for('upload_files') }}" method="POST" enctype="multipart/form-data" id="upload-form">
-                    <p>Select Files:&nbsp; <input type="file" name="file[]" id="file" multiple></p>
+                    <p>Select Files:&nbsp; <input type="file" name="file[]" id="file" accept="image/png, image/jpeg, image/jpg" multiple></p>
 
                   <p class="u-text u-text-4" style="margin-top: 1%">
 
@@ -274,41 +283,50 @@
             <div id="progress-bar" style="width:0%; height:20px; margin-top: 3%; background-color:#34421e; display:none;"></div>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script>
-                $(document).ready(function() {
-                    $('#upload-form').submit(function(e) {
-                        e.preventDefault();
-                        var formData = new FormData(this);
-                        $('#progress-bar').show();
-                        $.ajax({
-                            xhr: function() {
-                                var xhr = new window.XMLHttpRequest();
-                                xhr.upload.addEventListener("progress", function(evt) {
-                                    if (evt.lengthComputable) {
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
-                                        $('#progress-bar').css('width', percentComplete + '%');
-                                        if (percentComplete === 100) {
-                                            $('#progress-bar').css('background-color', '#34421e');
-                                        }
+            $(document).ready(function() {
+                $('#upload-form').submit(function(e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    $('#progress-bar').show();
+                    $.ajax({
+                        xhr: function() {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function(evt) {
+                                if (evt.lengthComputable) {
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    $('#progress-bar').css('width', percentComplete + '%');
+                                    if (percentComplete === 100) {
+                                        $('#progress-bar').css('background-color', '#34421e');
                                     }
-                                }, false);
-                                return xhr;
-                            },
-                            url: '/upload',
-                            type: 'POST',
-                            data: formData,
-                            success: function(data) {
-                                // Handle success
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        url: '/upload',
+                        type: 'POST',
+                        data: formData,
+                        success: function(data) {
+                            // Check if the response contains a redirect URL
+                            if(data.redirect) {
+                                // Redirect the browser to the URL
+                                window.location.href = data.redirect;
+                            } else {
+                                // If there's no redirect, then show the alert and hide the progress bar
                                 alert('Upload Complete');
                                 $('#progress-bar').hide();
-                            },
-                            cache: false,
-                            contentType: false,
-                            processData: false
-                        });
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
                     });
                 });
-            </script>
+            });
+        </script>
 
                  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                   <p class="u-align-center u-text u-text-6">
@@ -355,7 +373,7 @@
                             <input onclick="startProgress()" class="hover-button11" type="submit" value="Run Scope Scan">
                         </form>
               </div>
-           <div style="margin-left: 2%"> {% with messages2 = get_flashed_messages(category_filter=['scan']) %}
+           <div style="margin-left: 12%"> {% with messages2 = get_flashed_messages(category_filter=['scan']) %}
               {% if messages2 %}
                 <ul class="flashes">
                   {% for message in messages2 %}
@@ -431,9 +449,9 @@
           {% endif %}
         {% endwith %}
         </div>
-       <div style="float: right; margin-right:35%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
+       <div style="float: right; margin-right:32%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
       <form action="/download_zip" method="GET">
-          <button type="submit">Download Images</button>
+          <button type="submit">Download Scanned Images</button>
         </form>
             {% with messages1 = get_flashed_messages(category_filter=['zip_download']) %}
           {% if messages1 %}

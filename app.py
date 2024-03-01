@@ -40,74 +40,72 @@ def home():
 
 @app.route('/upload', methods=['POST'])
 def upload_files():
-    proj_addr = request.form.get('address')
-    selected_room = request.form.get('room')
-    room_nm = request.form.get('rm_name')
-    uploaded_files = request.files.getlist("file[]")
-    iffiles = request.files['file[]'].filename
-
-    if proj_addr and selected_room and iffiles != '':
-        session['sel_room'] = selected_room
-        session['proj_addr'] = proj_addr
-        session['room_nm'] = room_nm
-        flash(f'Your files uploaded successfully.', 'upload')
-        uploaded_filenames = []
-        session['delete_files'] = ''
-        for file in uploaded_files:
-            if file.filename == '':
-                continue  # Skip empty files
-
-            filename = secure_filename(file.filename)
-            filename = filename.replace(" ", "_")  # Replace spaces with underscores
-            uploaded_filenames.append(filename)  # Add the processed filename to the list
-
-            # Save the original file (optional)
-            original_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(original_path)
-
-            # Resize and save the image
-            image = Image.open(original_path)
-            image = image.resize((640, 320), Image.Resampling.LANCZOS)  # Use Image.Resampling.LANCZOS
-            resized_path = os.path.join(app.config['RESIZED_FOLDER'], filename)
-            image.save(resized_path)
+    if 'image' not in request.files:
+        flash(f'Only image files accepted!', 'image_accept')
+        return jsonify({'redirect': '/dashboard'})
     else:
-        if iffiles == '':
-            flash(f'Be sure to select one or more image files', 'upload')
-        if not proj_addr or not selected_room:
-              flash(f'A project Address & Room selection are required!', 'upload')
-        return redirect(url_for('dashboard'))
+        proj_addr = request.form.get('address')
+        selected_room = request.form.get('room')
+        room_nm = request.form.get('rm_name')
+        uploaded_files = request.files.getlist("file[]")
+        iffiles = request.files['file[]'].filename
+
+        if proj_addr and selected_room and iffiles != '':
+            session['sel_room'] = selected_room
+            session['proj_addr'] = proj_addr
+            session['room_nm'] = room_nm
+            flash(f'Your files uploaded successfully.', 'upload')
+            uploaded_filenames = []
+            session['delete_files'] = ''
+            for file in uploaded_files:
+                if file.filename == '':
+                    continue  # Skip empty files
+
+                filename = secure_filename(file.filename)
+                filename = filename.replace(" ", "_")  # Replace spaces with underscores
+                uploaded_filenames.append(filename)  # Add the processed filename to the list
+
+                # Save the original file (optional)
+                original_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(original_path)
+
+                # Resize and save the image
+                image = Image.open(original_path)
+                image = image.resize((640, 320), Image.Resampling.LANCZOS)  # Use Image.Resampling.LANCZOS
+                resized_path = os.path.join(app.config['RESIZED_FOLDER'], filename)
+                image.save(resized_path)
+        else:
+            if iffiles == '':
+                flash(f'Be sure to select one or more image files', 'upload')
+            if not proj_addr or not selected_room:
+                  flash(f'A project Address & Room selection are required!', 'upload')
+            return redirect(url_for('dashboard'))
 
     session['uploaded_files'] = uploaded_filenames
+    return jsonify({'redirect': '/dashboard'})
     return redirect(url_for('dashboard'))
 
 
 @app.route('/zip-images')
 def zip_images():
-    # The folder containing the images
     images_folder = 'static/saved_images/'
-
-    # The directory where you want to save the zip file
     output_folder = 'static/zip_file/'
 
-    # Ensure the output directory exists
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    # The name of the zip file you want to create
-    zip_filename = 'images.zip'
-
-    # The full path to the zip file
+    zip_filename = 'scanned_images.zip'
     zip_filepath = os.path.join(output_folder, zip_filename)
 
-    # Create a zip file
     with ZipFile(zip_filepath, 'w') as zip_file:
-        # Loop through the files in the images folder
         for root, dirs, files in os.walk(images_folder):
-            for file in files:
-                # Create the complete filepath of the file in the directory
-                file_path = os.path.join(root, file)
-                # Add file to the zip file
-                zip_file.write(file_path, arcname=file)
+            if files:
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    print(f"Adding {file_path} to zip")  # Debugging line
+                    zip_file.write(file_path, arcname=file)
+            else:
+                print("No files found in the directory.")  # Debugging line
 
     return f'Images have been zipped and saved to {zip_filepath}'
 
@@ -230,11 +228,11 @@ def delete_image_files():
         print(f"An error occurred: {str(e)}")
 
     # Delete Zip File *******************************************
-    file_path = "static/zip_file/images.zip"
+    file_path = "static/zip_file/scanned_images.zip"
 
     try:
         os.remove(file_path)
-        print("images.zip File deleted successfully.")
+        print("scanned_images.zip File deleted successfully.")
     except FileNotFoundError:
         print("File not found.")
     except PermissionError:
@@ -365,7 +363,6 @@ def image_detection():
     csv_file = 'Object_Report.csv'
     df.to_csv(csv_file, index=False)
     print(df)
-    zip_images()
     move_images()
     data_report()
 
@@ -471,6 +468,7 @@ def man_col_ttls():
         session['csv_complete'] = 'yes'
     # xxx
     print(df)
+    zip_images()
     image_display()
     # return redirect(url_for('dashboard'))
 
@@ -806,7 +804,7 @@ def download_csv2():
 
 @app.route('/download_zip', methods=['GET'])
 def download_zip():
-    path_to_zip = "static/zip_file/images.zip"
+    path_to_zip = "static/zip_file/scanned_images.zip"
     if os.path.exists(path_to_zip):
         return send_file(path_to_zip, as_attachment=True)
     else:
@@ -841,7 +839,6 @@ def image_display():
     except FileNotFoundError as e:
         print(f"An error occurred: {e}")
         flash('No Image Files found!', 'display')
-
 
 
 
