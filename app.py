@@ -323,7 +323,8 @@ def image_detection():
     num_images = len(files)
 
     # Run inference on each image
-    model = YOLO("housing_model-2024-01-16.pt")
+    # model = YOLO("housing_model-2024-01-16.pt")
+    model = YOLO("housing_model-2024-03-15.pt")
     results = model.predict(source=folder_path, save=True)
     # results = model.predict(source=folder_path)
     # Create an empty dataframe
