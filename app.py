@@ -1,4 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_file, jsonify
+import os
+from zipfile import ZipFile
+import io
 import shutil
 import os
 from PIL import Image, ImageOps
@@ -67,7 +70,6 @@ def upload_files():
             image = image.resize((640, 320), Image.Resampling.LANCZOS)  # Use Image.Resampling.LANCZOS
             resized_path = os.path.join(app.config['RESIZED_FOLDER'], filename)
             image.save(resized_path)
-
     else:
         if iffiles == '':
             flash(f'Be sure to select one or more image files', 'upload')
@@ -77,6 +79,37 @@ def upload_files():
 
     session['uploaded_files'] = uploaded_filenames
     return redirect(url_for('dashboard'))
+
+
+@app.route('/zip-images')
+def zip_images():
+    # The folder containing the images
+    images_folder = 'static/saved_images/'
+
+    # The directory where you want to save the zip file
+    output_folder = 'static/zip_file/'
+
+    # Ensure the output directory exists
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # The name of the zip file you want to create
+    zip_filename = 'images.zip'
+
+    # The full path to the zip file
+    zip_filepath = os.path.join(output_folder, zip_filename)
+
+    # Create a zip file
+    with ZipFile(zip_filepath, 'w') as zip_file:
+        # Loop through the files in the images folder
+        for root, dirs, files in os.walk(images_folder):
+            for file in files:
+                # Create the complete filepath of the file in the directory
+                file_path = os.path.join(root, file)
+                # Add file to the zip file
+                zip_file.write(file_path, arcname=file)
+
+    return f'Images have been zipped and saved to {zip_filepath}'
 
 
 # @app.route('/move-images')
@@ -188,6 +221,20 @@ def delete_image_files():
     try:
         os.remove(file_path)
         print("Object_Report_Complete deleted successfully.")
+    except FileNotFoundError:
+        print("File not found.")
+    except PermissionError:
+        print(
+            "Permission denied. Make sure you have the necessary permissions to delete the Object_Report_Totals.csv file.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+    # Delete Zip File *******************************************
+    file_path = "static/zip_file/images.zip"
+
+    try:
+        os.remove(file_path)
+        print("images.zip File deleted successfully.")
     except FileNotFoundError:
         print("File not found.")
     except PermissionError:
@@ -318,90 +365,9 @@ def image_detection():
     csv_file = 'Object_Report.csv'
     df.to_csv(csv_file, index=False)
     print(df)
+    zip_images()
     move_images()
     data_report()
-
-
-
-# def image_detection_old():
-#     url = "https://api.ultralytics.com/v1/predict/K3yIPEs0S2kYpJ1h2BSh"
-#     headers = {"x-api-key": "66c354f9eaa5a98b6c9ad54978429cf4c3919c452b"}
-#     data = {"size": 640, "confidence": 0.25, "iou": 0.45}
-#
-#     class_lst = ['door', 'ceilinglight', 'window', 'outlet', 'cabinet', 'lightswitch', 'ceilingfan', 'blinds', 'sink',
-#                  'tree', 'yard', 'closet', 'vanity', 'mirror', 'toilet', 'fridge', 'garagedoor', 'fence', 'furnace',
-#                  'kitchenrange', 'shower', 'fireplace', 'dishwasher', 'waterheater', 'deck', 'microwave',
-#                  'garagedooropener', 'clothesdryer', 'AC', 'clotheswasher', 'shed', 'gate', 'porchlight', 'sumppump']
-#
-#     folder_path = 'uploads/resized'
-#     output_path = 'static/saved_images'
-#     files = os.listdir(folder_path)
-#
-#     # Create an empty dataframe
-#     df = pd.DataFrame(columns=['Image'] + class_lst)
-#
-#     # Run inference on each image
-#     for file in files:
-#         img_file = f'{folder_path}/{file}'
-#         image_dict_classes = defaultdict(int)
-#
-#         # Initialize the dictionary with zeros for all object classes
-#         for obj_class in class_lst:
-#             image_dict_classes[obj_class] = 0
-#
-#         with open(img_file, "rb") as f:
-#             response = requests.post(url, headers=headers, data=data, files={"image": f})
-#
-#         # Check for successful response
-#         response.raise_for_status()
-#
-#         # Print inference results
-#         # json_str = json.dumps(response.json(), indent=2)
-#
-#         # json_obj = json.loads(json_str)
-#         # Parse the inference results
-#         json_obj = json.loads(response.content)
-#
-#         # ==========================================
-#         bounding_boxes = []
-#         names = []
-#         for key, value in json_obj.items():
-#             if key == 'data':
-#                 for obj in value:
-#                     labels = obj['name']
-#                     h = obj['height']
-#                     w = obj['width']
-#                     x = obj['xcenter']
-#                     y = obj['ycenter']
-#                     bounding_box = (x, y, w, h)
-#                     names.append(labels)
-#                     bounding_boxes.append(bounding_box)
-#         output_img = f'{output_path}/{file}'
-#         save_image_with_bounding_boxes(img_file, bounding_boxes, names, output_img)
-#         # print(file, labels, bounding_boxes)
-#
-#         # ========================================
-#
-#         # Count the occurrences of each object class
-#         for key, value in json_obj.items():
-#             if isinstance(value, list):
-#                 for obj in value:
-#                     # obj_class = value[0]['name']
-#                     obj_class = obj['name']
-#                     image_dict_classes[obj_class] += 1
-#
-#         row = {'Image': file}
-#         row.update(image_dict_classes)
-#         df = pd.concat([df, pd.DataFrame(row, index=[0])], ignore_index=True)
-#
-#     # Replace NaN values with zeros
-#     df.fillna(0, inplace=True)
-#
-#     # Print the resulting dataframe
-#     csv_file = 'Object_Report.csv'
-#     df.to_csv(csv_file, index=False)
-#     print(df)
-#     data_report()
 
 
 def data_report():
@@ -838,6 +804,16 @@ def download_csv2():
         flash('File Not Found!', 'nofile_scope')
         return redirect('/dashboard')
 
+@app.route('/download_zip', methods=['GET'])
+def download_zip():
+    path_to_zip = "static/zip_file/images.zip"
+    if os.path.exists(path_to_zip):
+        return send_file(path_to_zip, as_attachment=True)
+    else:
+        print("File not found.")
+        flash('File Not Found!', 'zip_download')
+        return redirect('/dashboard')
+
 
 @app.route('/image_display', methods=['GET'])
 def image_display():
@@ -845,49 +821,26 @@ def image_display():
     # image_folder = 'runs/detect/predict'
     image_urls = []
 
-    for filename in os.listdir(image_folder):
-        if filename.endswith('.jpg') or filename.endswith('.jpeg') or filename.endswith('.png'):
-            image_path = os.path.join(image_folder, filename)
-            image_path = image_path.replace('\\', '/')
-            image_path = image_path.replace('static/', '')
-            print(image_path)
-            image_urls.append(image_path)
+    try:
+        for filename in os.listdir(image_folder):
+            if filename.endswith('.jpg') or filename.endswith('.jpeg') or filename.endswith('.png'):
+                image_path = os.path.join(image_folder, filename)
+                image_path = image_path.replace('\\', '/')
+                image_path = image_path.replace('static/', '')
+                print(image_path)
+                image_urls.append(image_path)
 
-    # Store the variable in the session
-    # print(image_urls)
-    session['image_urls'] = image_urls
+        # Store the variable in the session
+        # print(image_urls)
+        session['image_urls'] = image_urls
 
-    # Flash a success message
-    flash('Scan process Completed!', 'scan')
-    scope_report()
-    return redirect('/dashboard')
-
-
-# def save_image_with_bounding_boxes(image_path, bounding_boxes, names, output_img):
-#     # Load the image
-#     # print(f'save {output_img}')
-#     image = cv2.imread(image_path)
-#     height, width, _ = image.shape
-#     print(image_path, names, bounding_boxes)
-#     # Draw bounding boxes on the image
-#     i = 0
-#     for (x, y, w, h) in bounding_boxes:
-#         # print(f'COOR-1: {x}, {y}, {w}, {h}')
-#         name = str(names[i])
-#         i += 1
-#         x = int(x * width)
-#         y = int(y * height)
-#         w = int(w * width)
-#         h = int(h * height)
-#         x, y, w, h = int(x), int(y), int(w), int(h)  # Convert to integers
-#         x = x - 25
-#         y = y - 35
-#         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#         cv2.putText(image, name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-#
-#     # Save the image with bounding boxes
-#     cv2.imwrite(output_img, image)
-
+        # Flash a success message
+        flash('Scan process Completed!', 'scan')
+        scope_report()
+        return redirect('/dashboard')
+    except FileNotFoundError as e:
+        print(f"An error occurred: {e}")
+        flash('No Image Files found!', 'display')
 
 
 
