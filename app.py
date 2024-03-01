@@ -40,46 +40,42 @@ def home():
 
 @app.route('/upload', methods=['POST'])
 def upload_files():
-    if 'image' not in request.files:
-        flash(f'Only image files accepted!', 'image_accept')
-        return jsonify({'redirect': '/dashboard'})
+    proj_addr = request.form.get('address')
+    selected_room = request.form.get('room')
+    room_nm = request.form.get('rm_name')
+    uploaded_files = request.files.getlist("file[]")
+    iffiles = request.files['file[]'].filename
+
+    if proj_addr and selected_room and iffiles != '':
+        session['sel_room'] = selected_room
+        session['proj_addr'] = proj_addr
+        session['room_nm'] = room_nm
+        flash(f'Your files uploaded successfully.', 'upload')
+        uploaded_filenames = []
+        session['delete_files'] = ''
+        for file in uploaded_files:
+            if file.filename == '':
+                continue  # Skip empty files
+
+            filename = secure_filename(file.filename)
+            filename = filename.replace(" ", "_")  # Replace spaces with underscores
+            uploaded_filenames.append(filename)  # Add the processed filename to the list
+
+            # Save the original file (optional)
+            original_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(original_path)
+
+            # Resize and save the image
+            image = Image.open(original_path)
+            image = image.resize((640, 320), Image.Resampling.LANCZOS)  # Use Image.Resampling.LANCZOS
+            resized_path = os.path.join(app.config['RESIZED_FOLDER'], filename)
+            image.save(resized_path)
     else:
-        proj_addr = request.form.get('address')
-        selected_room = request.form.get('room')
-        room_nm = request.form.get('rm_name')
-        uploaded_files = request.files.getlist("file[]")
-        iffiles = request.files['file[]'].filename
-
-        if proj_addr and selected_room and iffiles != '':
-            session['sel_room'] = selected_room
-            session['proj_addr'] = proj_addr
-            session['room_nm'] = room_nm
-            flash(f'Your files uploaded successfully.', 'upload')
-            uploaded_filenames = []
-            session['delete_files'] = ''
-            for file in uploaded_files:
-                if file.filename == '':
-                    continue  # Skip empty files
-
-                filename = secure_filename(file.filename)
-                filename = filename.replace(" ", "_")  # Replace spaces with underscores
-                uploaded_filenames.append(filename)  # Add the processed filename to the list
-
-                # Save the original file (optional)
-                original_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(original_path)
-
-                # Resize and save the image
-                image = Image.open(original_path)
-                image = image.resize((640, 320), Image.Resampling.LANCZOS)  # Use Image.Resampling.LANCZOS
-                resized_path = os.path.join(app.config['RESIZED_FOLDER'], filename)
-                image.save(resized_path)
-        else:
-            if iffiles == '':
-                flash(f'Be sure to select one or more image files', 'upload')
-            if not proj_addr or not selected_room:
-                  flash(f'A project Address & Room selection are required!', 'upload')
-            return redirect(url_for('dashboard'))
+        if iffiles == '':
+            flash(f'Be sure to select one or more image files', 'upload')
+        if not proj_addr or not selected_room:
+              flash(f'A project Address & Room selection are required!', 'upload')
+        return redirect(url_for('dashboard'))
 
     session['uploaded_files'] = uploaded_filenames
     return jsonify({'redirect': '/dashboard'})
