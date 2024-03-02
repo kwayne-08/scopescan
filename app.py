@@ -321,6 +321,9 @@ def image_detection():
     # folder_path = '/home/kwayne/PycharmProjects/Flask_Website/uploads/resized/'
     files = os.listdir(folder_path)
     num_images = len(files)
+    if num_images < 1:
+        flash(f'No images to scan!', 'scope_scan')
+        return redirect(url_for('dashboard'))
 
     # Run inference on each image
     # model = YOLO("housing_model-2024-01-16.pt")

@@ -294,9 +294,9 @@
                             xhr.upload.addEventListener("progress", function(evt) {
                                 if (evt.lengthComputable) {
                                     var percentComplete = evt.loaded / evt.total;
-                                    percentComplete = parseInt(percentComplete * 100);
+                                    percentComplete = parseInt((percentComplete * 100) / 2);
                                     $('#progress-bar').css('width', percentComplete + '%');
-                                    if (percentComplete === 100) {
+                                    if (percentComplete === 50) {
                                         $('#progress-bar').css('background-color', '#34421e');
                                     }
                                 }
@@ -373,7 +373,20 @@
                             <input onclick="startProgress()" class="hover-button11" type="submit" value="Run Scope Scan">
                         </form>
               </div>
-           <div style="margin-left: 12%"> {% with messages2 = get_flashed_messages(category_filter=['scan']) %}
+           <div style="margin-left: 27%">
+               <!-- SCAN MESSAGE 1 -------------------------------- -->
+                {% with messages = get_flashed_messages(category_filter=['scope_scan']) %}
+              {% if messages %}
+                <ul class="flashes">
+                  {% for message in messages %}
+                    <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+                    {% endwith %}
+
+               <!-- SCAN MESSAGE 2 -------------------------------- -->
+               {% with messages2 = get_flashed_messages(category_filter=['scan']) %}
               {% if messages2 %}
                 <ul class="flashes">
                   {% for message in messages2 %}
