@@ -817,28 +817,30 @@ def download_zip():
 def image_display():
     image_folder = 'static/saved_images'
     # image_folder = 'runs/detect/predict'
+    files = os.listdir(image_folder)
+
+    if len(files) < 1:
+        flash(f'No images to display!', 'display')
+        return redirect(url_for('dashboard'))
+
     image_urls = []
 
-    try:
-        for filename in os.listdir(image_folder):
-            if filename.endswith('.jpg') or filename.endswith('.jpeg') or filename.endswith('.png'):
-                image_path = os.path.join(image_folder, filename)
-                image_path = image_path.replace('\\', '/')
-                image_path = image_path.replace('static/', '')
-                print(image_path)
-                image_urls.append(image_path)
+    for filename in os.listdir(image_folder):
+        if filename.endswith('.jpg') or filename.endswith('.jpeg') or filename.endswith('.png'):
+            image_path = os.path.join(image_folder, filename)
+            image_path = image_path.replace('\\', '/')
+            image_path = image_path.replace('static/', '')
+            print(image_path)
+            image_urls.append(image_path)
 
-        # Store the variable in the session
-        # print(image_urls)
-        session['image_urls'] = image_urls
+    # Store the variable in the session
+    # print(image_urls)
+    session['image_urls'] = image_urls
 
-        # Flash a success message
-        flash('Scan process Completed!', 'scan')
-        scope_report()
-        return redirect('/dashboard')
-    except FileNotFoundError as e:
-        print(f"An error occurred: {e}")
-        flash('No Image Files found!', 'display')
+    # Flash a success message
+    flash('Scan process Completed!', 'scan')
+    scope_report()
+    return redirect('/dashboard')
 
 
 

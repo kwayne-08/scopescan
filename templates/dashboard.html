@@ -448,11 +448,13 @@
         <h2 class="u-align-center u-text u-text-default u-text-1">Detected Images Display</h2>
         <p class="u-align-center u-text u-text-2">Once your uploaded images are scanned, the resulting images will appear here.</p>
 
-      <div style="float: left;margin-left:35%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
+      <div style="float: left;margin-left:30%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
       <form action="/image_display" method="GET">
           <button type="submit">Display Images</button>
         </form>
-           {% with messages1 = get_flashed_messages(category_filter=['display']) %}
+
+          <!-- ********************************** -->
+          {% with messages1 = get_flashed_messages(category_filter=['display']) %}
           {% if messages1 %}
             <ul class="flashes">
               {% for message in messages1 %}
@@ -462,7 +464,7 @@
           {% endif %}
         {% endwith %}
         </div>
-       <div style="float: right; margin-right:32%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
+       <div style="float: right; margin-right:28%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
       <form action="/download_zip" method="GET">
           <button type="submit">Download Scanned Images</button>
         </form>
