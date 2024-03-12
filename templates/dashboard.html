@@ -481,7 +481,22 @@
 
 
       {% if 'image_urls' in session %}
-      <div style="margin-left: 2%; margin-top: -150px; margin-bottom:30px">
+      <div style="margin-left: 2%; margin-top: -50px; margin-bottom:30px">
+          <table width="95%" border="0">
+          {% for i in range(0, session['image_urls']|length, 4) %}
+            <tr>
+                {% for j in range(i, i+4) %}
+                    <td width="25%">
+                        {% if session['image_urls'][j] %}
+                            <img src="{{ url_for('static', filename=session['image_urls'][j]) }}" alt="Image {{ j }}" width="100%">
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+          </table>
+
+          <!--
             <table width="95%" border="0"><tr>
                 <td width="25%">{% if session['image_urls'][0] %} <img src="{{ url_for('static', filename=session['image_urls'][0]) }}" alt="Image" width="100%"> {% endif %}</td>
                 <td width="25%">{% if session['image_urls'][1] %} <img src="{{ url_for('static', filename=session['image_urls'][1]) }}" alt="Image" width="100%"> {% endif %}</td>
@@ -531,7 +546,7 @@
                  <td>{% if session['image_urls'][27] %} <img src="{{ url_for('static', filename=session['image_urls'][27]) }}" alt="Image" width="100%"> {% endif %}</td>
  			</tr>
 
-			</table>
+			</table> -->
       </div>
       {% endif %}
 
