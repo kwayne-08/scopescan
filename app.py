@@ -300,7 +300,7 @@ def clear_image_files():
         print(f"An error occurred: {str(e)}")
 
     session.pop('uploaded_files', None)
-    session['image_urls'] = None
+    session['image_urls'] = []
     # session.pop['image_urls', None]
 
 
@@ -837,12 +837,19 @@ def image_display():
     # Store the variable in the session
     # print(image_urls)
     session['image_urls'] = image_urls
+    # Ensure session['image_urls'] is initialized
+    if 'image_urls' not in session or session['image_urls'] is None:
+        session['image_urls'] = []
+
+    # Calculate the range end (or any other necessary prep) in Python
+    range_end = len(session['image_urls'])
 
     # Flash a success message
     flash('Scan process Completed!', 'scan')
     scope_report()
-    return redirect('/dashboard')
-
+    # return redirect('/dashboard')
+    # Render your template, passing all necessary data
+    return render_template('dashboard.html', range_end=range_end)
 
 
 if __name__ == '__main__':

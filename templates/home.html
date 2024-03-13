@@ -5,34 +5,18 @@
     <meta name="keywords" content="Real Estate Agency, Dream house, Amanda Martocchio Architecture, The design challenge, What We Do, Good Work, Greenwich Modern, What to learn more?">
     <meta name="description" content="">
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nicepage.css') }}">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nicepage.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Home.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='js/jquery.js') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='js/nicepage.js') }}">
-    <meta name="generator" content="Nicepage 6.2.1, nicepage.com">
+    
+    <meta name="generator" content="Nicepage 6.6.0, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-
-
-   <style>
-        .menu-bar {
-           background-color: #c19434;
-           padding-top: 15px;
-           padding-right: 35px;
-           z-index: 0;
-           /* position: absolute; */
-           float: left;
-           margin-left: -35%;
-           width: 135%;
-           height: 55px;
-           margin-top: -2%;
-           text-align: right;
-            /* Align menu items to the right */
-        }
-
+    <style>
         .menu-bar ul {
             list-style-type: none;
-            margin: 0;
-            padding: 0;
+            margin-right: 25%;
+            padding-top: 0;
             text-align: right;
         }
 
@@ -41,9 +25,9 @@
             margin-right: 10px;
         }
 
-         .menu-bar ul li:first-child {
-        margin-left: 0; /* Remove left margin for the first menu item */
-        }
+         /* .menu-bar ul li:first-child {
+        margin-left: 0;
+        } */
 
          .menu-bar ul li a {
             text-decoration: none;
@@ -61,60 +45,61 @@
     
     
     
-    
-    
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "Scope Scan",
-		"sameAs": []
+		"logo": "images/English_Optics_Logo-transp.png"
 }</script>
-    <meta name="theme-color" content="#34421e">
+    <meta name="theme-color" content="#3a509c">
     <meta property="og:title" content="Home">
+    <meta property="og:description" content="">
     <meta property="og:type" content="website">
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en">
-
-  <div class="header-background" style="float: left; position: absolute; top: 0px; left: 0; width: 100%; height: 790px; background-color:#2f3329;"></div>
-
-  <header class="u-clearfix u-header" id="sec-f9f5"><div class="u-align-left u-clearfix u-sheet u-sheet-1">
-
-        <h3 class="u-align-left-xs u-headline u-text u-text-1" style="font-size:34pt; font-weight:bold; color:white">
-          <a href="/">scope scan</a>
-        </h3>
-        <div style="width:100%; height:60px"></div>
-<!-- LOGIN  ------------------------------------------------- -->
-         <div style="clear:both"><div
-         <div style="height:50px">
-         <div style="margin-top:-95px ;float:right; margin-right: 0%; margin-bottom:0px; color:white">
+  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-9 u-header u-valign-middle u-header" id="sec-f9f5"><a href="https://nicepage.com/k/ticket-html-templates" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
+        <img src="{{ url_for('static', filename='images/English_Optics_Logo-transp.png') }}" class="u-logo-image u-logo-image-1">
+      </a><h3 class="u-headline u-text u-text-palette-1-base u-text-1">
+        <a href="/">scope scan</a>
+      </h3>
+      <!-- LOGIN  ------------------------------------------------- -->
+         
+         <div style="position: absolute; left: 28%; top:73% ;color:red; font-weight: bold">
+         	<!--<p>error message here!</p>-->
              {% if error %}
                 <p class="error-message">{{ error }}</p>
               {% endif %}
          </div>
-          <div style="z-index:2000; width:60%; margin-top:0px ;float:right; margin-right:0%; margin-bottom:30px; color:white; "> <!-- Add the login form -->
-        <form action="{{ url_for('login') }}" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" style="color:black" id="username" name="username" placeholder="username" required>
-            <label for="password">Password:</label>
-            <input type="password" style="color:black" id="password" name="password" placeholder="password" required>
-            <input type="submit" style="color:black" value="Login">
-        </form></div>
-         </div>
+       <div style="position: relative; top:58px; margin-left: 20%; z-index: 1000"> 
+       	 <div style="float: left; ">
+	       <form action="{{ url_for('login') }}" method="POST">
+	            <label for="username">Username:</label>
+	            <input type="text" style="color:black" id="username" name="username" placeholder="username" required>
+	            &nbsp;&nbsp;&nbsp;<label for="password">Password:</label>
+	            <input type="password" style="color:black" id="password" name="password" placeholder="password" required>
+	            <input type="submit" style="color:black" value="Login">
+	        </form>
+	    </div>
       <!-- END LOGIN  ------------------------------------------------- -->
-             <div style="width:100%; height:20px"></div>
+             
           <!-- MENU ------------------------------------------------- -->
-    <div class="menu-bar" style="">
+    <div class="menu-bar" style="float-right; margin-right: 5%;  margin-top:-15px; z-index: 1000">
         <ul>
             <li><a href="{{ url_for('login') }}">Home</a></li>
             <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
         </ul>
     </div>
+    </div>
         <!-- END MENU --------------------------------------------- -->
-
-      </div></header>
-    <section style="z-index:0" class="u-clearfix u-section-1" id="sec-baf5">
+      
+      </header>
+    <!--************************************************************************************************-->
+    <section class="u-clearfix u-custom-color-9 u-section-1" id="sec-f9d6">
       <div class="u-palette-1-base u-shape u-shape-rectangle u-shape-1"></div>
-        <img src="{{ url_for('static', filename='images/01.jpg') }}" alt="" class="u-image u-image-default u-image-1">
+      <div class="u-palette-3-base u-shape u-shape-rectangle u-shape-2"></div>
+    </section>
+    <!--** CONTENT 1 SECTION **********************************************************************************************-->
+    <section class="u-clearfix u-section-2" id="sec-baf5">
+      <img src="{{ url_for('static', filename='images/01.jpg') }}" alt="" class="u-image u-image-default u-image-1">
       <div class="u-container-style u-group u-group-1">
         <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-container-layout-1">
           <p class="u-text u-text-body-alt-color u-text-1">Turn your property photos into SCOPE analysis scans using AI technology for object detection. Scope your properties in minutes - not hours!</p>
@@ -125,8 +110,9 @@
           <h1 class="u-text u-text-body-alt-color u-title u-text-2">Property scope scanning</h1>
         </div>
       </div>
-      <div class="u-palette-3-base u-shape u-shape-rectangle u-shape-2"></div>
-      <div class="u-clearfix u-gutter-10 u-layout-wrap u-layout-wrap-1">
+      <div class="u-palette-3-base u-shape u-shape-rectangle u-shape-1"></div>
+      <!--** 3 IMAGES ****************************************-->
+     <div class="u-clearfix u-gutter-10 u-layout-wrap u-layout-wrap-1">
         <div class="u-layout">
           <div class="u-layout-row">
             <div class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-container-style u-image u-layout-cell u-left-cell u-size-20 u-image-2">
@@ -141,9 +127,11 @@
           </div>
         </div>
       </div>
+      
+      <div class="u-custom-color-9 u-shape u-shape-rectangle u-shape-2"></div>
     </section>
-  <!-- BLOCK 1 ************************************************************* -->
-    <section class="u-clearfix u-section-2" id="sec-af74">
+    <!--** CONTENT 2 SECTION **********************************************************************************************-->
+    <section class="u-clearfix u-section-3" id="sec-af74">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-align-left u-container-style u-group u-group-1">
           <div class="u-container-layout u-valign-middle u-container-layout-1">
@@ -156,91 +144,21 @@
         <div class="u-align-left u-border-11 u-border-palette-1-base u-line u-line-vertical u-line-1"></div>
       </div>
     </section>
-
-  <!-- BLOCK 2 *******************************************
-    <section class="u-clearfix u-palette-1-dark-3 u-section-3" id="sec-0ca1">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-palette-3-base u-shape u-shape-rectangle u-shape-1"></div>
-        <div class="u-container-style u-expanded-width-sm u-group u-group-1">
-          <div class="u-container-layout u-valign-middle-xl u-container-layout-1">
-            <h2 class="u-text u-text-1">What We Do</h2>
-            <p class="u-text u-text-2">Design Studio is an architectural and urban design practice with an international reputation for design quality, for pioneering environmental expertise and a progressive architectural approach.</p>
-          </div>
-        </div>
-        <div class="u-clearfix u-gutter-0 u-layout-wrap u-layout-wrap-1">
-          <div class="u-gutter-0 u-layout">
-            <div class="u-layout-col">
-              <div class="u-size-30">
-                <div class="u-layout-row">
-                  <div class="u-container-style u-layout-cell u-left-cell u-size-30 u-layout-cell-1">
-                    <div class="u-container-layout">
-                        <img src="{{ url_for('static', filename='images/Untitled5.jpg') }}" alt="" class="u-expanded-width-sm u-expanded-width-xs u-image u-image-1">
-                    </div>
-                  </div>
-                  <div class="u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-2">
-                    <div class="u-container-layout">
-                        <img src="{{ url_for('static', filename='images/33dee2efdaae64632514e4942754b400.jpg') }}" alt="" class="u-expanded-width-sm u-expanded-width-xs u-image u-image-2">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="u-size-30">
-                <div class="u-layout-row">
-                  <div class="u-container-style u-layout-cell u-left-cell u-size-30 u-layout-cell-3">
-                    <div class="u-container-layout">
-                        <img src="{{ url_for('static', filename='images/d39717eb731b7ff9448aeffca445f15d.jpg') }}" alt="" class="u-expanded-width-sm u-expanded-width-xs u-image u-image-3">
-                    </div>
-                  </div>
-                  <div class="u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-4">
-                    <div class="u-container-layout">
-                        <img src="{{ url_for('static', filename='images/8a209396-a5e6-d5fa-cdbb-6f3377184622.jpg') }}" alt="" class="u-expanded-width-sm u-expanded-width-xs u-image u-image-4">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
-  <!-- BLOCK 3 **************************************
-    <section class="u-clearfix u-section-4" id="sec-3fc8">
-      <div class="u-palette-1-base u-shape u-shape-rectangle u-shape-1"></div>
-      <div class="u-container-style u-expanded-width-xs u-group u-group-1">
-        <div class="u-container-layout u-valign-middle-xs u-container-layout-1">
-          <p class="u-text u-text-1">Practicing at the confluence of art, architecture, and building technology, we collaborate with clients to create buildings and environments in dialogue with culture and place.</p>
-        </div>
-      </div>
-        <img src="{{ url_for('static', filename='images/Untitled11.jpg') }}" alt="" class="u-image u-image-default u-image-1">
-      <div class="u-container-style u-expanded-width-xs u-group u-group-2">
-        <div class="u-container-layout u-valign-bottom u-container-layout-2">
-          <a href="https://jensen-architects.com/work/meraki-market-parklet/" class="u-link u-link-1" title="Read More" target="_blank">Meraki Market Parklet</a>
-          <a href="https://jensen-architects.com/work/turner-residence/" class="u-link u-link-2" title="turner residence">Turner Residence</a>
-          <a href="https://jensen-architects.com/work/tech-office-space/" class="u-link u-link-3" title="Tech Office Space" target="_blank">Tech Office Space</a>
-          <a href="https://jensen-architects.com/work/david-ireland-house/" class="u-link u-link-4" title="More" target="_blank">David Ireland House</a>
-        </div>
-      </div>
-    </section> -->
-
-  <!-- BLOCK 4 *********************************************************
-    <section class="u-clearfix u-palette-3-base u-section-5" id="sec-ce46">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-align-center u-container-style u-group u-group-1">
-          <div class="u-container-layout u-valign-middle u-container-layout-1">
-            <h2 class="u-text u-text-1">What to learn more?</h2>
-            <p class="u-text u-text-2">Sample text. Lorem ipsum dolor sit amet, consectetur adipiscing elit nullam nunc justo sagittis suscipit ultrices.</p>
-            <a href="https://nicepage.site" class="u-btn u-button-style u-white u-btn-1">Read More</a>
-          </div>
-        </div>
-      </div>
-    </section> -->
     
     
     
-     <footer class="u-clearfix u-footer u-palette-1-base" id="sec-1161"><div class="u-clearfix u-sheet u-sheet-1">
+    <footer class="u-clearfix u-footer u-palette-1-base" id="sec-1161"><div class="u-clearfix u-sheet u-sheet-1">
         <p class="u-align-center u-text u-text-1">Scope Scan - Property Scope scanning</p>
-        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+         <!-- MENU ------------------------------------------------- -->
+		    <div class="menu-bar" style="float-right; margin-right: 20%; margin-top:15px; z-index: 1000">
+		        <ul>
+		            <li><a href="{{ url_for('login') }}">Home</a></li>
+		            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+		        </ul>
+		    </div>
+		    <!--</div>-->
+		<!-- END MENU --------------------------------------------- -->
+        <!-- <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
           <div class="menu-collapse">
             <a class="u-button-style u-nav-link" href="#">
               <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
@@ -249,9 +167,12 @@
             </a>
           </div>
           <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-unstyled"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Dashboard.html">Dashboard</a>
-</li></ul>
+         
+            <ul class="u-nav u-unstyled">
+            <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a></li>
+            
+			<li class="u-nav-item"><a class="u-button-style u-nav-link" href="Dashboard.html">Dashboard</a></li>
+			</ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
@@ -264,7 +185,7 @@
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
-        </nav>
+        </nav> -->
       </div></footer>
   
 </body></html>
