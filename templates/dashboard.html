@@ -587,5 +587,21 @@
           </div>
         </nav> -->
       </div></footer>
-  
+  <script>
+                function activateDetection() {
+                    const progressBar = document.querySelector('.progress-bar');
+                    progressBar.style.width = '0%';
+
+                    // Make an HTTP request to the Flask route
+                    fetch('/detect', { method: 'POST' })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data); // Handle the response from the Flask route
+                            progressBar.style.width = '100%'; // Update progress bar width to 100%
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            </script>
 </body></html>
