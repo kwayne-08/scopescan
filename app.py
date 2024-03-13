@@ -336,7 +336,7 @@ def image_detection():
     while j < num_images:
         r = results[j]  # only one result as only one image was inferred
         class_names = r.names
-        img_pth = r.path.split('\\')
+        img_pth = r.path.split('/')
         print(img_pth)
 
         # Initialize the dictionary with zeros for all object classes
