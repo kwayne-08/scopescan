@@ -37,6 +37,9 @@ def home():
 
     return render_template('home.html', resized_images=resized_images, table=table)
 
+@app.route('/login_page')
+def login_page():
+    return render_template('login.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_files():
@@ -731,7 +734,7 @@ def kitchen(obj_report, c_list, df):
 
 
 # @app.route('/', methods=['GET', 'POST'])
-@app.route('/', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
      if request.method == 'POST':
          username = request.form['username']
@@ -742,8 +745,8 @@ def login():
              delete_image_files()
              return redirect(url_for('dashboard'))
          else:
-             return render_template('home.html', error='Invalid credentials')
-     return render_template('home.html')
+             return render_template('login.html', error='Invalid credentials')
+     return render_template('login.html')
 
 
 

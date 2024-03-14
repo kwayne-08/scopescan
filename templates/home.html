@@ -5,10 +5,10 @@
     <meta name="keywords" content="Real Estate Agency, Dream house, Amanda Martocchio Architecture, The design challenge, What We Do, Good Work, Greenwich Modern, What to learn more?">
     <meta name="description" content="">
     <title>Home</title>
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nicepage.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Home.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='js/jquery.js') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='js/nicepage.js') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nicepage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+   <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='js/nicepage.js') }}" defer=""></script>
     
     <meta name="generator" content="Nicepage 6.6.0, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
@@ -32,7 +32,7 @@
          .menu-bar ul li a {
             text-decoration: none;
             padding: 5px 10px;
-            color: #333;
+            color: #3a509c;
             font-weight: bold;
             transition: color 0.3s ease;
         }
@@ -56,36 +56,26 @@
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-9 u-header u-valign-middle u-header" id="sec-f9f5"><a href="https://nicepage.com/k/ticket-html-templates" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
+  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-9 u-header u-valign-middle u-header" id="sec-f9f5"><a href="/" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
         <img src="{{ url_for('static', filename='images/English_Optics_Logo-transp.png') }}" class="u-logo-image u-logo-image-1">
       </a><h3 class="u-headline u-text u-text-palette-1-base u-text-1">
         <a href="/">scope scan</a>
       </h3>
-      <!-- LOGIN  ------------------------------------------------- -->
-         
-         <div style="position: absolute; left: 28%; top:73% ;color:red; font-weight: bold">
-         	<!--<p>error message here!</p>-->
-             {% if error %}
-                <p class="error-message">{{ error }}</p>
-              {% endif %}
-         </div>
-       <div style="position: relative; top:58px; margin-left: 20%; z-index: 1000"> 
-       	 <div style="float: left; ">
-	       <form action="{{ url_for('login') }}" method="POST">
-	            <label for="username">Username:</label>
-	            <input type="text" style="color:black" id="username" name="username" placeholder="username" required>
-	            &nbsp;&nbsp;&nbsp;<label for="password">Password:</label>
-	            <input type="password" style="color:black" id="password" name="password" placeholder="password" required>
-	            <input type="submit" style="color:black" value="Login">
-	        </form>
-	    </div>
-      <!-- END LOGIN  ------------------------------------------------- -->
-             
-          <!-- MENU ------------------------------------------------- -->
-    <div class="menu-bar" style="float-right; margin-right: 5%;  margin-top:-15px; z-index: 1000">
+     
+     <!----- LOG IN ERROR MESSAGE -------------------------------->
+      <div style="position: absolute; left: 58%; top:65% ;color:red; font-weight: bold">
+ 	<!--<p>error message here!</p>-->
+     {% if error %}
+        <p class="error-message">{{ error }}</p>
+      {% endif %}
+ 		</div>
+         <!----- END LOG IN ERROR MESSAGE -------------------------------->
+    <!-- MENU ------------------------------------------------- -->
+    <div class="menu-bar" style="position: absolute; left: 55%;  top:95%; width:400px; z-index: 1000">
         <ul>
-            <li><a href="{{ url_for('login') }}">Home</a></li>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('login_page') }}">Login</a></li>
         </ul>
     </div>
     </div>
@@ -147,18 +137,9 @@
     
     
     
-    <footer class="u-clearfix u-footer u-palette-1-base" id="sec-1161"><div class="u-clearfix u-sheet u-sheet-1">
+   <footer class="u-clearfix u-footer u-palette-1-base" id="sec-1161"><div class="u-clearfix u-sheet u-sheet-1">
         <p class="u-align-center u-text u-text-1">Scope Scan - Property Scope scanning</p>
-         <!-- MENU ------------------------------------------------- -->
-		    <div class="menu-bar" style="float-right; margin-right: 20%; margin-top:15px; z-index: 1000">
-		        <ul>
-		            <li><a href="{{ url_for('login') }}">Home</a></li>
-		            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-		        </ul>
-		    </div>
-		    <!--</div>-->
-		<!-- END MENU --------------------------------------------- -->
-        <!-- <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
           <div class="menu-collapse">
             <a class="u-button-style u-nav-link" href="#">
               <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
@@ -167,25 +148,22 @@
             </a>
           </div>
           <div class="u-custom-menu u-nav-container">
-         
-            <ul class="u-nav u-unstyled">
-            <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a></li>
-            
-			<li class="u-nav-item"><a class="u-button-style u-nav-link" href="Dashboard.html">Dashboard</a></li>
-			</ul>
+            <ul class="u-nav u-unstyled"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
               <div class="u-inner-container-layout u-sidenav-overflow">
                 <div class="u-menu-close"></div>
-                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Dashboard.html">Dashboard</a>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
 </li></ul>
               </div>
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
-        </nav> -->
+        </nav>
       </div></footer>
   
 </body></html>
