@@ -153,6 +153,27 @@
           background-color: #34421e;
           transition: width 0.5s ease-in-out;
         }
+        
+         .upload {
+	          background-color: #34421e;
+		      border-radius: 10px;
+		      -moz-border-radius: 20px;
+		      -webkit-border-radius: 20px;
+		      -moz-background-clip: padding;
+		      
+	          font-weight: bold;
+	          cursor: pointer;
+	          background-color: #74c159;
+	          width: 200px; 
+	          height: 50px;
+	          color: white;
+	          border:  1px solid white;
+	        }
+
+	        .upload:hover {
+	          /* background-color: #23527c; */
+	          background-color: #497737;
+	        }
 
         @keyframes progress-animation {
           0% {
@@ -183,40 +204,67 @@
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-9 u-header u-valign-middle u-header" id="sec-f9f5"><a href="/" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
+  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en">
+  
+  <header class="u-clearfix u-custom-color-9 u-header u-header" id="sec-f9f5"><a href="https://nicepage.com/k/ticket-html-templates" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
         <img src="{{ url_for('static', filename='images/English_Optics_Logo-transp.png') }}" class="u-logo-image u-logo-image-1"></img>
       </a><h3 class="u-headline u-text u-text-palette-1-base u-text-1">
-        <a href="/">scope scan</a>
-      </h3>
+        <a href="/">scope-scan.ai</a>
+      </h3><div class="u-container-style u-expanded-width u-group u-palette-3-base u-shape-rectangle u-group-1">
+        <div class="u-container-layout u-valign-middle-xs u-container-layout-1">
+          <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+            <div class="menu-collapse" style="font-weight: 700; font-size: 1.25rem;">
+              <a class="u-button-style u-custom-text-color u-nav-link" href="#">
+                <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-7d6c"></use></svg>
+                <svg class="u-svg-content" version="1.1" id="svg-7d6c" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+              </a>
+            </div>
+            <div class="u-custom-menu u-nav-container">
+              <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li><!--<li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="login.html">login</a>
+</li>--></ul>
+            </div>
+            <div class="u-custom-menu u-nav-container-collapse">
+              <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                <div class="u-inner-container-layout u-sidenav-overflow">
+                  <div class="u-menu-close"></div>
+                  <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li><!--<li class="u-nav-item"><a class="u-button-style u-nav-link" href="login.html">login</a>-->
+</li></ul>
+                </div>
+              </div>
+              <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+            </div>
+          </nav>
+        </div>
+      </div></header>
       
-       <!-- MENU ------------------------------------------------- -->
-    <div class="menu-bar" style="position: absolute; left: 55%;  top:95%; width:400px; z-index: 1000">
-        <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-        </ul>
-    </div>
-    </div>
-        <!-- END MENU --------------------------------------------- -->
-      </header>
-    <section class="u-clearfix u-palette-1-dark-2 u-section-1" id="sec-74b1">
-      <div class="u-expanded-width u-palette-3-base u-shape u-shape-rectangle u-shape-1"></div>
-      <h2 class="u-text u-text-body-color u-text-1">Dashboard</h2>
+      
+   <section class="u-clearfix u-palette-1-dark-2 u-section-1" id="sec-74b1">
+      <div class="u-expanded-width u-shape u-shape-rectangle u-shape-1"></div>
+      <h2 class="u-text u-text-palette-3-base u-text-1">Dashboard</h2>
       <h2 class="u-align-left u-text u-text-2">Scan-A-Scope</h2>
       <p class="u-align-left u-text u-text-3">Upload your property photos and run our specially trained object detection model for household objects. You will receive SCOPE report on your property saving you hours of paperwork.&nbsp; Download your report in either a CSV or PDF file<br>
         <br>Follow the steps below, download your report, and take the rest of the day off!
       </p>
     </section>
+    
+    
+    
     <section class="u-border-20 u-border-palette-3-base u-clearfix u-section-2" id="sec-30e8">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-align-left u-text u-text-1">First Step:&nbsp; <span style="font-weight: 400; font-size: 1.125rem;">Upload Photos for scanning</span>
         </h2>
         <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
-            <div class="u-layout-row">              
-              <div class="u-align-center u-container-style u-layout-cell u-left-cell u-size-42 u-layout-cell-1">
+            <div class="u-layout-row">
+                          
+              <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-42 u-layout-cell-1">
               <!-- CONTAINER FOR FILE UPLOAD & ROOM SELECTION -->
-              <div class="u-align-center u-container-style u-layout-cell u-left-cell u-size-42 u-layout-cell-1">
+              <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-42 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
                     {% with messages1 = get_flashed_messages(category_filter=['image_accept']) %}
                       {% if messages1 %}
@@ -227,8 +275,8 @@
                         </ul>
                       {% endif %}
                     {% endwith %}
-                  <h5 class="u-text u-text-2">Select &amp; Upload photos from your computer</h5>
-                    <p class="u-align-center u-text u-text-3">
+                  <h5 class="u-text u-text-2">Select Upload photos from your computer</h5>
+                    <p class="u-align-left u-text u-text-3">
                     <form action="{{ url_for('upload_files') }}" method="POST" enctype="multipart/form-data" id="upload-form">
                     <p>Select Files:&nbsp; <input type="file" name="file[]" id="file" accept="image/png, image/jpeg, image/jpg" multiple></p>
 
@@ -236,13 +284,13 @@
 
              <p><label> Enter Project Street Address: <input style="" type="text" name="address"> </label></p>
                     <p style="font-weight:bold">Select Option:</p>
-                   <div align="left" style="margin-left:40%; margin-top: -1%">
+                   <div align="left" style="margin-left:10%; margin-top: -1%">
                      <label><input type="radio" name="room" value="Multi-Room" style="font-size:14pt">&nbsp;Whole House </label><br><br>
 
                     <label><input type="radio" name="room" value="Multi-Room" style="font-size:14pt"> Single Room </label>
                        <ul><label> Single Room Name: <input style="" type="text" name="rm_name"> </label</ul>
                    </div>
-                 <input type="submit" value="Upload">
+                 <div align="center"><input class="upload" type="submit" value="Upload"></div>
                     </form>
 
                     {% with messages1 = get_flashed_messages(category_filter=['upload']) %}
@@ -258,6 +306,7 @@
               </div>
                 <!-- END CONTAINER FOR FILE UPLOAD & ROOM SELECTION -->
               </div>
+              
               <div class="u-container-style u-layout-cell u-size-18 u-layout-cell-2">
                <!-- CONTAINER FOR FILE LIST -->
                 <div class="u-container-layout u-valign-top u-container-layout-2">
@@ -318,9 +367,9 @@
                     <li>{{ filename }}</li>
                     {% endfor %}
                     </ul></p>
-                  <div class="hover-button1" style="margin-top:30%; margin-left: 0%">
+                  <div class="" style="margin-top:30%; margin-left: 0%">
                         <form style="padding-left:1%; " action="/clear" method="post">
-                            <button class="hover-button11" type="submit" class="btn btn-danger">Clear Image Files</button>
+                            <button class="upload" type="submit" class="btn btn-danger">Clear Image Files</button>
                         </form>
                   <div>
                 </div>
@@ -337,22 +386,24 @@
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <h2 class="u-align-left u-text u-text-1">Second Step:&nbsp;&nbsp;<span style="font-weight: 400; font-size: 1.25rem;">Scan Images</span>
         </h2>
+        	
+        <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
             <!-- xxxxxxxxxxxxxxxxx -->
             <div class="progress-container" style="margin-left:25%; margin-top:2%">
               <div class="progress-bar"></div>
             </div>
 
             <!-- xxxxxxxxxxxxxxxxx -->
-        <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
-          <div class="u-layout">
-            <div class="u-layout-row">
+        
              <!-- CONTAINER FOR SCAN BUTTON ----------------------------- -->
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
                   <h5 class="u-text u-text-default u-text-2">Scan Images to detect SCOPE Objects </h5>
-                  <div class="hover-button1" style="margin-left: 28%;margin-top:40px">
+                  <div class="" style="margin-left: 28%;margin-top:40px">
                         <form style="padding-left:5%; " action="{{ url_for('image_detection') }}" method="post">
-                            <input onclick="startProgress()" class="hover-button11" type="submit" value="Run Scope Scan">
+                            <input onclick="startProgress()" class="upload" type="submit" value="Run Scope Scan">
                         </form>
               </div>
            <div style="margin-left: 27%">
@@ -393,11 +444,11 @@
               </div>
               <!-- CONTAINER FOR REMOVE BUTTON ----------------------------- -->
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
-                <div class="u-container-layout u-container-layout-2" style="margin-top:.5%; margin-left: 20%">
-                  <h5 class="u-text u-text-default u-text-2">Remove Project </h5>
-                  <div class="hover-button1" style="margin-top:30px; margin-left: 20%">
+                <div class="u-container-layout u-container-layout-2">
+                  <h5 class="u-text u-text-default u-text-3">Remove Project</h5>
+                  <div class="" style="margin-top:30px; margin-left: 30%">
                         <form style="padding-left:1%; " action="/delete" method="post">
-                            <button class="hover-button11" type="submit" class="btn btn-danger">Remove Project Files</button>
+                            <button class="upload" type="submit">Remove Project Files</button>
                         </form>
               </div>
             </div>
@@ -428,7 +479,7 @@
 
       <div style="float: left;margin-left:30%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
       <form action="/image_display" method="GET">
-          <button type="submit">Display Images</button>
+          <button class="upload" type="submit">Display Images</button>
         </form>
 
           <!-- ********************************** -->
@@ -444,7 +495,7 @@
         </div>
        <div style="float: right; margin-right:28%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
       <form action="/download_zip" method="GET">
-          <button type="submit">Download Scanned Images</button>
+          <button class="upload" style="width: 260px" type="submit">Download Scanned Images</button>
         </form>
             {% with messages1 = get_flashed_messages(category_filter=['zip_download']) %}
           {% if messages1 %}
@@ -484,15 +535,13 @@
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <h2 class="u-align-left u-text u-text-1">Third Step:&nbsp; <span style="font-weight: 400; font-size: 1.125rem;">Download report file</span>
         </h2>
-        <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1" >
-          <div class="u-layout" style="margin-left:20%">
+       <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
             <div class="u-layout-row">
-                <!-- CONTAINER FOR IMAGE REPORT DOWNLOAD ---------------------------- -->
               <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
                 <div class="u-container-layout u-container-layout-1">
-                  <div class="hover-button1" style="margin-top:30px; margin-left: 5%">
                    <form style="padding-left:-8%; " action="{{ url_for('download_csv') }}" method="post">
-                       <input class="hover-button11" style="color: white" type="submit" value="Download Image Report">
+                       <input class="upload" style="color: white; width: 230px" type="submit" value="Download Image Report">
                    </form>
 
                  {% with messages1 = get_flashed_messages(category_filter=['nofile_image']) %}
@@ -508,11 +557,10 @@
                 </div>
 
               <!-- CONTAINER FOR SCOPE  REPORT DOWNLOAD ---------------------------- -->
-              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2" style="margin-left:15%">
+             <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
                 <div class="u-container-layout u-container-layout-2">
-                 <div class="hover-button1" style="margin-top:30px">
                    <form style="padding-left:-12%; " action="{{ url_for('download_csv2') }}" method="post">
-                       <input class="hover-button11" style="color: white" type="submit" value="Download SCOPE Report">
+                       <input class="upload" style="color: white; width:230px" type="submit" value="Download SCOPE Report">
                    </form>
 
                  {% with messages1 = get_flashed_messages(category_filter=['nofile_scope']) %}

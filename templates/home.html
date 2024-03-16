@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Real Estate Agency, Dream house, Amanda Martocchio Architecture, The design challenge, What We Do, Good Work, Greenwich Modern, What to learn more?">
     <meta name="description" content="">
-    <title>Home</title>
+    <title>Scope-Scan</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nicepage.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Home.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Scope-Scan.css') }}">
    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='js/nicepage.js') }}" defer=""></script>
     
     <meta name="generator" content="Nicepage 6.6.0, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-    <style>
+    <!--<style>
         .menu-bar ul {
             list-style-type: none;
             margin-right: 25%;
@@ -40,7 +40,7 @@
          .menu-bar ul li a:hover {
             color: #fff; /* Change color on hover */
         }
-    </style>
+    </style>-->
     
     
     
@@ -52,17 +52,51 @@
 		"logo": "images/English_Optics_Logo-transp.png"
 }</script>
     <meta name="theme-color" content="#3a509c">
-    <meta property="og:title" content="Home">
+    <meta property="og:title" content="Scope-Scan">
     <meta property="og:description" content="">
     <meta property="og:type" content="website">
   <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
-  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-9 u-header u-valign-middle u-header" id="sec-f9f5"><a href="/" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
+  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en">
+  
+  <header class="u-clearfix u-custom-color-9 u-header u-header" id="sec-f9f5"><a href="https://nicepage.com/k/ticket-html-templates" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
         <img src="{{ url_for('static', filename='images/English_Optics_Logo-transp.png') }}" class="u-logo-image u-logo-image-1">
       </a><h3 class="u-headline u-text u-text-palette-1-base u-text-1">
-        <a href="/">scope scan</a>
-      </h3>
-     
-     <!----- LOG IN ERROR MESSAGE -------------------------------->
+        <a href="/">scope-scan.ai</a>
+      </h3><div class="u-container-style u-expanded-width u-group u-palette-3-base u-shape-rectangle u-group-1">
+        <div class="u-container-layout u-valign-middle-xs u-container-layout-1">
+          <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+            <div class="menu-collapse" style="font-weight: 700; font-size: 1.25rem;">
+              <a class="u-button-style u-custom-text-color u-nav-link" href="#">
+                <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-7d6c"></use></svg>
+                <svg class="u-svg-content" version="1.1" id="svg-7d6c" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+              </a>
+            </div>
+            <div class="u-custom-menu u-nav-container">
+              <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="{{ url_for('home') }}">Home</a>
+</li>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li>
+<li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="{{ url_for('login_page') }}">login</a>
+</ul>
+            </div>
+            <div class="u-custom-menu u-nav-container-collapse">
+              <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                <div class="u-inner-container-layout u-sidenav-overflow">
+                  <div class="u-menu-close"></div>
+                  <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('login_page') }}">login</a>
+</li></ul>
+                </div>
+              </div>
+              <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+            </div>
+          </nav>
+        </div>
+      </div></header>
+      
+      <!----- LOG IN ERROR MESSAGE -------------------------------->
       <div style="position: absolute; left: 58%; top:65% ;color:red; font-weight: bold">
  	<!--<p>error message here!</p>-->
      {% if error %}
@@ -70,61 +104,48 @@
       {% endif %}
  		</div>
          <!----- END LOG IN ERROR MESSAGE -------------------------------->
-    <!-- MENU ------------------------------------------------- -->
-    <div class="menu-bar" style="position: absolute; left: 55%;  top:95%; width:400px; z-index: 1000">
-        <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('login_page') }}">Login</a></li>
-        </ul>
-    </div>
-    </div>
-        <!-- END MENU --------------------------------------------- -->
       
-      </header>
     <!--************************************************************************************************-->
-    <section class="u-clearfix u-custom-color-9 u-section-1" id="sec-f9d6">
-      <div class="u-palette-1-base u-shape u-shape-rectangle u-shape-1"></div>
-      <div class="u-palette-3-base u-shape u-shape-rectangle u-shape-2"></div>
+   <section class="u-clearfix u-palette-3-base u-section-1" id="sec-f9d6">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-palette-1-base u-shape u-shape-rectangle u-shape-1"></div>
+        <img src="{{ url_for('static', filename='images/01.jpg') }}" alt="" class="u-image u-image-default u-image-1">
+        <div class="u-container-style u-group u-group-1">
+          <div class="u-container-layout u-valign-middle u-container-layout-1">
+            <h1 class="u-text u-text-body-alt-color u-title u-text-1">Property scope scanning</h1>
+          </div>
+        </div>
+        <div class="u-container-style u-group u-group-2">
+          <div class="u-container-layout u-container-layout-2">
+            <p class="u-text u-text-body-alt-color u-text-2">Turn your property photos into SCOPE analysis scans using AI technology for object detection. Scope your properties in minutes - not hours!</p>
+          </div>
+        </div>
+      </div>
     </section>
-    <!--** CONTENT 1 SECTION **********************************************************************************************-->
     <section class="u-clearfix u-section-2" id="sec-baf5">
-      <img src="{{ url_for('static', filename='images/01.jpg') }}" alt="" class="u-image u-image-default u-image-1">
-      <div class="u-container-style u-group u-group-1">
-        <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-container-layout-1">
-          <p class="u-text u-text-body-alt-color u-text-1">Turn your property photos into SCOPE analysis scans using AI technology for object detection. Scope your properties in minutes - not hours!</p>
-        </div>
-      </div>
-      <div class="u-container-style u-group u-group-2">
-        <div class="u-container-layout u-valign-middle u-container-layout-2">
-          <h1 class="u-text u-text-body-alt-color u-title u-text-2">Property scope scanning</h1>
-        </div>
-      </div>
-      <div class="u-palette-3-base u-shape u-shape-rectangle u-shape-1"></div>
-      <!--** 3 IMAGES ****************************************-->
-     <div class="u-clearfix u-gutter-10 u-layout-wrap u-layout-wrap-1">
-        <div class="u-layout">
-          <div class="u-layout-row">
-            <div class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-container-style u-image u-layout-cell u-left-cell u-size-20 u-image-2">
-              <div class="u-container-layout" style="padding:5px" style="width:3%; border: 1px solid"><img src="{{ url_for('static', filename='images/1.jpg') }}" alt="" width="100%" height="140"></div>
-            </div>
-            <div class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-container-style u-image u-layout-cell u-size-20 u-image-3">
-              <div class="u-container-layout" style="padding:5px" style="width:3%"><img src="{{ url_for('static', filename='images/Untitled1.jpg') }}" alt="" width="100%" height="140"></div>
-            </div>
-            <div class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-container-style u-image u-layout-cell u-right-cell u-size-20 u-image-4">
-              <div class="u-container-layout" style="padding:5px" style="width:3%"><img src="{{ url_for('static', filename='images/2.jpg') }}" alt="" width="100%" height="140"></div>
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-palette-3-base u-shape u-shape-rectangle u-shape-1"></div>
+        <div class="data-layout-selected u-clearfix u-gutter-10 u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-container-style u-image u-layout-cell u-left-cell u-size-20 u-image-1">
+                <div class="u-container-layout" style="padding:5px" style="width:3%; border: 1px solid"><img src="{{ url_for('static', filename='images/1.jpg') }}" alt="" width="100%" height="140"></div>
+              </div>
+              <div class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-container-style u-image u-layout-cell u-size-20 u-image-2">
+                <div class="u-container-layout" style="padding:5px" style="width:3%"><img src="{{ url_for('static', filename='images/Untitled1.jpg') }}" alt="" width="100%" height="140"></div>
+              </div>
+              <div class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-container-style u-image u-layout-cell u-right-cell u-size-20 u-image-3">
+                <div class="u-container-layout" style="padding:5px" style="width:3%"><img src="{{ url_for('static', filename='images/2.jpg') }}" alt="" width="100%" height="140"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
-      <div class="u-custom-color-9 u-shape u-shape-rectangle u-shape-2"></div>
     </section>
-    <!--** CONTENT 2 SECTION **********************************************************************************************-->
     <section class="u-clearfix u-section-3" id="sec-af74">
-      <div class="u-clearfix u-sheet u-sheet-1">
+      <div class="u-clearfix u-sheet u-valign-middle-md u-sheet-1">
         <div class="u-align-left u-container-style u-group u-group-1">
-          <div class="u-container-layout u-valign-middle u-container-layout-1">
+          <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-container-layout-1">
             <h2 class="u-align-left-xs u-text u-text-1">The property management challenge</h2>
             <p class="u-align-left-xs u-text u-text-2"> Managing property scopes is an essential but often tedious task for property managers. It can take up much of their time, leaving little room for other essential tasks. However, what if there was a way to automate property scope reports using vision AI that scans the property and identifies its elements? This would free up a significant amount of time for managers to focus on other important tasks.<br>
               <br>All it takes is a 30-minute photo shoot of the property and another 30 minutes to scan, review, and finalize the scope report. With this time saved, property managers can now begin to think about how to better use their time and resources to achieve their goals.
