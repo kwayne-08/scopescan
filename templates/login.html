@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>login</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nicepage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+   <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='js/nicepage.js') }}" defer=""></script>
+<!--    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>-->
+    <meta name="generator" content="Nicepage 6.6.3, nicepage.com">
+    <meta name="referrer" content="origin">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+	<style>    
+	   .login {
+	          border: none;
+	          cursor: pointer;
+	          background-color: #74c159;
+	          width: 200px; 
+	          height: 30px;
+	          border:  1px solid white;
+	        }
+
+	        .login:hover {
+	          /* background-color: #23527c; */
+	          background-color: #497737;
+	        }
+
+	</style>
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Scope Scan",
+		"logo": "images/English_Optics_Logo-transp.png"
+}</script>
+    <meta name="theme-color" content="#3a509c">
+    <meta property="og:title" content="login">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-9 u-header u-header" id="sec-f9f5"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="https://nicepage.com/k/ticket-html-templates" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
+          <img src="{{ url_for('static', filename='images/English_Optics_Logo-transp.png') }}" class="u-logo-image u-logo-image-1">
+        </a>
+        <h3 class="u-headline u-text u-text-palette-1-base u-text-1">
+          <a href="/">scope-scan.ai</a>
+        </h3>
+      </div></header>
+    <section class="u-align-center u-clearfix u-gradient u-section-1" id="sec-d692">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-border-4 u-border-palette-3-base u-container-style u-grey-10 u-group u-opacity u-opacity-20 u-radius u-shape-round u-group-1">
+          <div class="u-container-layout u-valign-top u-container-layout-1">
+            <h2 class="u-text u-text-default u-text-1">Dashboard Login</h2>
+            <div class="u-form u-form-1">
+            <!--*** LOGIN FORM ********************************************-->
+             <div style="position: absolute; left: 28%; top:-15% ;color:red; font-weight: bold">
+         	<!--<p>error message here!</p>-->
+             {% if error %}
+                <p class="error-message">{{ error }}</p>
+              {% endif %}
+         </div>
+         
+         <div style="position: relative; top:15px; margin-left: 17%; z-index: 1000"> 
+              <!--<form action="{{ url_for('login') }}" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" style="padding: 10px" source="email" name="form">-->
+               <form action="{{ url_for('login') }}" method="POST">
+                <div class="u-form-group u-form-name u-label">
+                  <label for="name-3b9a" class="u-label">Username</label>
+                  <input type="text" placeholder="User Name" id="name-3b9a" name="username" class="u-input u-input-rectangle" required="required">
+                </div>
+                <div class="u-form-group u-label">
+                  <label for="email-3b9a" class="u-label">Password</label>
+                  <input type="password" placeholder="Password" id="email-3b9a" name="password" class="u-input u-input-rectangle" required="required">
+                </div>
+                <div class="u-align-left u-form-group u-form-submit"><br/>
+                  <div align="center"><input type="submit" class="login" value="Login"></div>
+                </div>
+              </form><br/><br/><br/><br/>
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    
+    <footer class="u-clearfix u-footer u-palette-1-base" id="sec-1161"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-align-center u-text u-text-1">Scope Scan - Property Scope scanning</p>
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+          <div class="menu-collapse">
+            <a class="u-button-style u-nav-link" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></footer>
+  
+</body></html>

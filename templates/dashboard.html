@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Scan-A-Scope, First Step:&nbsp; Upload Photos for scanning, Second Step:&nbsp;&nbsp;Press &amp;quot;Detect Objects&amp;quot; button and wait for a report., Scope Scan Report, Third Step:&nbsp; Download report file">
+    <meta name="description" content="">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nicepage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Dashboard.css') }}">
+   <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='js/nicepage.js') }}" defer=""></script>
+    <meta name="generator" content="Nicepage 6.6.0, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    <style>
+        .menu-bar ul {
+            list-style-type: none;
+            margin-right: 25%;
+            padding-top: 0;
+            text-align: right;
+        }
+
+        .menu-bar ul li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+         /* .menu-bar ul li:first-child {
+        margin-left: 0;
+        } */
+
+         .menu-bar ul li a {
+            text-decoration: none;
+            padding: 5px 10px;
+            color: #3a509c;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+         .menu-bar ul li a:hover {
+            color: #fff; /* Change color on hover */
+        }
+
+        .flask_button {
+          border: none;
+          cursor: pointer;
+        }
+
+        .flask_button:hover {
+          /* background-color: #23527c; */
+          background-color: #497737;
+        }
+
+        .hover-button1 {
+            /* background-color: #34421e; */
+            background-color: #74c159;
+            border-radius: 10px;
+            -moz-border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-background-clip: padding;
+            -webkit-background-clip: padding-box;
+            margin-left: 40% ;
+            margin-top: 5%px;
+            width:230px;
+            height:50px;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hover-button1:hover {
+          background-color: #536833;
+        }
+
+         .hover-button11 {
+             /* background-color: #34421e; */
+             background-color: #74c159;
+            border-radius: 10px;
+            -moz-border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-background-clip: padding;
+            -webkit-background-clip: padding-box;
+            /* margin-left: 40% ;
+            margin-top: 5%;
+            width:230px;
+            height:50px; */
+            padding-left:12%;
+            padding-top: 4px;
+            border: none;
+            color: white"
+        }
+
+        .hover-button11:hover {
+          background-color: #536833;
+        }
+
+        .hover-button {
+        background-color: #34421e;
+        border-radius: 10px;
+        -moz-border-radius: 20px;
+        -webkit-border-radius: 20px;
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        margin-left: 25% ;
+        margin-top: -5px;
+        width:230px;
+        height:50px;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        }
+
+        .hover-button:hover {
+          background-color: #536833;
+        }
+
+        .hover-button2 {
+        background-color: #34421e;
+        border-radius: 10px;
+        -moz-border-radius: 20px;
+        -webkit-border-radius: 20px;
+        -moz-background-clip: padding;
+        -webkit-background-clip: padding-box;
+        /* margin-left: -30px ;
+        margin-top: -5px;
+        width:230px;
+        height:50px; */
+        padding-left:12%;
+        padding-top: 4px;
+        border: none;
+        color: white"
+        }
+
+        .hover-button2:hover {
+          background-color: #536833;
+        }
+
+          .progress-container {
+          width: 500px;
+          height: 20px;
+          /* background-color: #f2f2f2; */
+          background-color: #e5e5e5;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+
+        .progress-bar {
+          width: 0%;
+          height: 100%;
+          /* background-color: #4caf50; */
+          background-color: #34421e;
+          transition: width 0.5s ease-in-out;
+        }
+        
+         .upload {
+	          background-color: #34421e;
+		      border-radius: 10px;
+		      -moz-border-radius: 20px;
+		      -webkit-border-radius: 20px;
+		      -moz-background-clip: padding;
+		      
+	          font-weight: bold;
+	          cursor: pointer;
+	          background-color: #74c159;
+	          width: 200px; 
+	          height: 50px;
+	          color: white;
+	          border:  1px solid white;
+	        }
+
+	        .upload:hover {
+	          /* background-color: #23527c; */
+	          background-color: #497737;
+	        }
+
+        @keyframes progress-animation {
+          0% {
+            width: 0%;
+          }
+          100% {
+            width: 100%;
+          }
+        }
+    </style>
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Scope Scan",
+		"logo": "images/English_Optics_Logo-transp.png"
+}</script>
+
+ <script>
+        function startProgress() {
+          const progressBar = document.querySelector('.progress-bar');
+          progressBar.style.animation = 'progress-animation 15s linear forwards';
+        }
+        </script>
+    <meta name="theme-color" content="#3a509c">
+    <meta property="og:title" content="Dashboard">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en">
+  
+  <header class="u-clearfix u-custom-color-9 u-header u-header" id="sec-f9f5"><a href="https://nicepage.com/k/ticket-html-templates" class="u-hover-feature u-hover-palette-2-base u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
+        <img src="{{ url_for('static', filename='images/English_Optics_Logo-transp.png') }}" class="u-logo-image u-logo-image-1"></img>
+      </a><h3 class="u-headline u-text u-text-palette-1-base u-text-1">
+        <a href="/">scope-scan.ai</a>
+      </h3><div class="u-container-style u-expanded-width u-group u-palette-3-base u-shape-rectangle u-group-1">
+        <div class="u-container-layout u-valign-middle-xs u-container-layout-1">
+          <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+            <div class="menu-collapse" style="font-weight: 700; font-size: 1.25rem;">
+              <a class="u-button-style u-custom-text-color u-nav-link" href="#">
+                <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-7d6c"></use></svg>
+                <svg class="u-svg-content" version="1.1" id="svg-7d6c" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+              </a>
+            </div>
+            <div class="u-custom-menu u-nav-container">
+              <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li><!--<li class="u-nav-item"><a class="u-button-style u-nav-link u-text-palette-1-base" href="login.html">login</a>
+</li>--></ul>
+            </div>
+            <div class="u-custom-menu u-nav-container-collapse">
+              <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                <div class="u-inner-container-layout u-sidenav-overflow">
+                  <div class="u-menu-close"></div>
+                  <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li><!--<li class="u-nav-item"><a class="u-button-style u-nav-link" href="login.html">login</a>-->
+</li></ul>
+                </div>
+              </div>
+              <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+            </div>
+          </nav>
+        </div>
+      </div></header>
+      
+      
+   <section class="u-clearfix u-palette-1-dark-2 u-section-1" id="sec-74b1">
+      <div class="u-expanded-width u-shape u-shape-rectangle u-shape-1"></div>
+      <h2 class="u-text u-text-palette-3-base u-text-1">Dashboard</h2>
+      <h2 class="u-align-left u-text u-text-2">Scan-A-Scope</h2>
+      <p class="u-align-left u-text u-text-3">Upload your property photos and run our specially trained object detection model for household objects. You will receive SCOPE report on your property saving you hours of paperwork.&nbsp; Download your report in either a CSV or PDF file<br>
+        <br>Follow the steps below, download your report, and take the rest of the day off!
+      </p>
+    </section>
+    
+    
+    
+    <section class="u-border-20 u-border-palette-3-base u-clearfix u-section-2" id="sec-30e8">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-align-left u-text u-text-1">First Step:&nbsp; <span style="font-weight: 400; font-size: 1.125rem;">Upload Photos for scanning</span>
+        </h2>
+        <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+                          
+              <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-42 u-layout-cell-1">
+              <!-- CONTAINER FOR FILE UPLOAD & ROOM SELECTION -->
+              <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-42 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                    {% with messages1 = get_flashed_messages(category_filter=['image_accept']) %}
+                      {% if messages1 %}
+                        <ul class="flashes">
+                          {% for message in messages1 %}
+                            <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+                  <h5 class="u-text u-text-2">Select Upload photos from your computer</h5>
+                    <p class="u-align-left u-text u-text-3">
+                    <form action="{{ url_for('upload_files') }}" method="POST" enctype="multipart/form-data" id="upload-form">
+                    <p>Select Files:&nbsp; <input type="file" name="file[]" id="file" accept="image/png, image/jpeg, image/jpg" multiple></p>
+
+                  <p class="u-text u-text-4" style="margin-top: 1%">
+
+             <p><label> Enter Project Street Address: <input style="" type="text" name="address"> </label></p>
+                    <p style="font-weight:bold">Select Option:</p>
+                   <div align="left" style="margin-left:10%; margin-top: -1%">
+                     <label><input type="radio" name="room" value="Multi-Room" style="font-size:14pt">&nbsp;Whole House </label><br><br>
+
+                    <label><input type="radio" name="room" value="Multi-Room" style="font-size:14pt"> Single Room </label>
+                       <ul><label> Single Room Name: <input style="" type="text" name="rm_name"> </label</ul>
+                   </div>
+                 <div align="center"><input class="upload" type="submit" value="Upload"></div>
+                    </form>
+
+                    {% with messages1 = get_flashed_messages(category_filter=['upload']) %}
+                      {% if messages1 %}
+                        <ul class="flashes">
+                          {% for message in messages1 %}
+                            <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+                </div>
+              </div>
+                <!-- END CONTAINER FOR FILE UPLOAD & ROOM SELECTION -->
+              </div>
+              
+              <div class="u-container-style u-layout-cell u-size-18 u-layout-cell-2">
+               <!-- CONTAINER FOR FILE LIST -->
+                <div class="u-container-layout u-valign-top u-container-layout-2">
+                  <h5 class="u-text u-text-default u-text-5">Uploaded Files List:</h5>
+                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+            <div id="progress-bar" style="width:0%; height:20px; margin-top: 3%; background-color:#34421e; display:none;"></div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+            $(document).ready(function() {
+                $('#upload-form').submit(function(e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    $('#progress-bar').show();
+                    $.ajax({
+                        xhr: function() {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function(evt) {
+                                if (evt.lengthComputable) {
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt((percentComplete * 100) / 2);
+                                    $('#progress-bar').css('width', percentComplete + '%');
+                                    if (percentComplete === 50) {
+                                        $('#progress-bar').css('background-color', '#34421e');
+                                    }
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        url: '/upload',
+                        type: 'POST',
+                        data: formData,
+                        success: function(data) {
+                            // Check if the response contains a redirect URL
+                            if(data.redirect) {
+                                // Redirect the browser to the URL
+                                window.location.href = data.redirect;
+                            } else {
+                                // If there's no redirect, then show the alert and hide the progress bar
+                                alert('Upload Complete');
+                                $('#progress-bar').hide();
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                });
+            });
+        </script>
+
+                 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                  <p class="u-align-center u-text u-text-6">
+                    <ul>
+                    {% for filename in uploaded_files %}
+                    <li>{{ filename }}</li>
+                    {% endfor %}
+                    </ul></p>
+                  <div class="" style="margin-top:30%; margin-left: 0%">
+                        <form style="padding-left:1%; " action="/clear" method="post">
+                            <button class="upload" type="submit" class="btn btn-danger">Clear Image Files</button>
+                        </form>
+                  <div>
+                </div>
+              </div>
+              <!-- END CONTAINER FOR FILE LIST -->
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-border-20 u-border-custom-color-3 u-clearfix u-grey-10 u-section-3" id="sec-ea24">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h2 class="u-align-left u-text u-text-1">Second Step:&nbsp;&nbsp;<span style="font-weight: 400; font-size: 1.25rem;">Scan Images</span>
+        </h2>
+        	
+        <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+            <!-- xxxxxxxxxxxxxxxxx -->
+            <div class="progress-container" style="margin-left:25%; margin-top:2%">
+              <div class="progress-bar"></div>
+            </div>
+
+            <!-- xxxxxxxxxxxxxxxxx -->
+        
+             <!-- CONTAINER FOR SCAN BUTTON ----------------------------- -->
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <h5 class="u-text u-text-default u-text-2">Scan Images to detect SCOPE Objects </h5>
+                  <div class="" style="margin-left: 28%;margin-top:40px">
+                        <form style="padding-left:5%; " action="{{ url_for('image_detection') }}" method="post">
+                            <input onclick="startProgress()" class="upload" type="submit" value="Run Scope Scan">
+                        </form>
+              </div>
+           <div style="margin-left: 27%">
+               <!-- SCAN MESSAGE 1 -------------------------------- -->
+                {% with messages = get_flashed_messages(category_filter=['scope_scan']) %}
+              {% if messages %}
+                <ul class="flashes">
+                  {% for message in messages %}
+                    <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+                    {% endwith %}
+
+               <!-- SCAN MESSAGE 2 -------------------------------- -->
+               {% with messages2 = get_flashed_messages(category_filter=['scan']) %}
+              {% if messages2 %}
+                <ul class="flashes">
+                  {% for message in messages2 %}
+                    <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+                    {% endwith %}
+            <!-- ANOTHER MESSAGE ************************************* -->
+           {% with messages2 = get_flashed_messages(category_filter=['room_sel']) %}
+                      {% if messages2 %}
+                        <ul class="flashes">
+                          {% for message in messages2 %}
+                            <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+           </div>
+
+                </div>
+              </div>
+              <!-- CONTAINER FOR REMOVE BUTTON ----------------------------- -->
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-2">
+                  <h5 class="u-text u-text-default u-text-3">Remove Project</h5>
+                  <div class="" style="margin-top:30px; margin-left: 30%">
+                        <form style="padding-left:1%; " action="/delete" method="post">
+                            <button class="upload" type="submit">Remove Project Files</button>
+                        </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-align-center u-container-style u-expanded-width u-grey-10 u-group u-group-1">
+          <div class="u-container-layout u-valign-top u-container-layout-3">
+            <h2 class="u-text u-text-4">Scope Scan Report</h2>
+                <div style="margin-left: 45%;">
+                    <p class="u-text u-text-3">{% if table %}
+                {{ table|safe }}
+                {% else %}
+                    <div style="margin-left: -80%;"><p>No report available.</p></div>
+                {% endif %}
+                    </p></div>
+              <br>
+
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="u-align-center u-border-20 u-border-palette-4-base u-clearfix u-section-4" id="sec-f3f1">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-align-center u-text u-text-default u-text-1">Detected Images Display</h2>
+        <p class="u-align-center u-text u-text-2">Once your uploaded images are scanned, the resulting images will appear here.</p>
+
+      <div style="float: left;margin-left:30%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
+      <form action="/image_display" method="GET">
+          <button class="upload" type="submit">Display Images</button>
+        </form>
+
+          <!-- ********************************** -->
+          {% with messages1 = get_flashed_messages(category_filter=['display']) %}
+          {% if messages1 %}
+            <ul class="flashes">
+              {% for message in messages1 %}
+                <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        </div>
+       <div style="float: right; margin-right:28%; z-index:10 ;margin-top: -30px; margin-bottom:50px">
+      <form action="/download_zip" method="GET">
+          <button class="upload" style="width: 260px" type="submit">Download Scanned Images</button>
+        </form>
+            {% with messages1 = get_flashed_messages(category_filter=['zip_download']) %}
+          {% if messages1 %}
+            <ul class="flashes">
+              {% for message in messages1 %}
+                <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        </div>
+
+
+      {% if 'image_urls' in session %}
+      <div style="margin-left: 2%; margin-top: -50px; margin-bottom:30px">
+          <table width="95%" border="0">
+          {% for i in range(0, (range_end|default(0, true)), 4) %}
+            <tr>
+                {% for j in range(i, i+4) %}
+                    <td width="25%">
+                        {% if session['image_urls'][j] %}
+                            <img src="{{ url_for('static', filename=session['image_urls'][j]) }}" alt="Image {{ j }}" width="100%">
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+          </table>
+
+          
+      </div>
+      {% endif %}
+	</div>
+    </section>
+    
+    <section class="u-border-20 u-border-palette-1-base u-clearfix u-palette-5-light-1 u-section-5" id="sec-ff8c">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h2 class="u-align-left u-text u-text-1">Third Step:&nbsp; <span style="font-weight: 400; font-size: 1.125rem;">Download report file</span>
+        </h2>
+       <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                   <form style="padding-left:-8%; " action="{{ url_for('download_csv') }}" method="post">
+                       <input class="upload" style="color: white; width: 230px" type="submit" value="Download Image Report">
+                   </form>
+
+                 {% with messages1 = get_flashed_messages(category_filter=['nofile_image']) %}
+                      {% if messages1 %}
+                        <ul class="flashes">
+                          {% for message in messages1 %}
+                            <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+              </div>
+                </div>
+
+              <!-- CONTAINER FOR SCOPE  REPORT DOWNLOAD ---------------------------- -->
+             <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-2">
+                   <form style="padding-left:-12%; " action="{{ url_for('download_csv2') }}" method="post">
+                       <input class="upload" style="color: white; width:230px" type="submit" value="Download SCOPE Report">
+                   </form>
+
+                 {% with messages1 = get_flashed_messages(category_filter=['nofile_scope']) %}
+                      {% if messages1 %}
+                        <ul class="flashes">
+                          {% for message in messages1 %}
+                            <span style="color: red; font-size:14pt; font-weight:bold"> {{ message }}</span>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+              </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    <footer class="u-clearfix u-footer u-palette-1-base" id="sec-1161"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-align-center u-text u-text-1">Scope Scan - Property Scope scanning</p>
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+          <div class="menu-collapse">
+            <a class="u-button-style u-nav-link" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Scope-Scan.html">Scope-Scan</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Dashboard.html">Dashboard</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('home') }}">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+        <img class="u-image u-image-default u-image-1" src="{{ url_for('static', filename='images/inception_logo.png') }}" alt="" data-image-width="501" data-image-height="217">
+        <img class="u-image u-image-contain u-image-default u-image-2" src="{{ url_for('static', filename='images/scope-scan-logo.png') }}" alt="" data-image-width="2255" data-image-height="2250">
+      </div></footer>  
+  <script>
+                function activateDetection() {
+                    const progressBar = document.querySelector('.progress-bar');
+                    progressBar.style.width = '0%';
+
+                    // Make an HTTP request to the Flask route
+                    fetch('/detect', { method: 'POST' })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data); // Handle the response from the Flask route
+                            progressBar.style.width = '100%'; // Update progress bar width to 100%
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+            </script>
+</body></html>
