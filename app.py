@@ -330,7 +330,7 @@ def image_detection():
 
     # Run inference on each image
     # model = YOLO("housing_model-2024-01-16.pt")
-    model = YOLO("housing_model-2024-03-06.pt")
+    model = YOLO("housing_model-2024-05-15.pt")
     results = model.predict(source=folder_path, save=True)
     # results = model.predict(source=folder_path)
     # Create an empty dataframe
@@ -339,6 +339,7 @@ def image_detection():
     while j < num_images:
         r = results[j]  # only one result as only one image was inferred
         class_names = r.names
+        # img_pth = r.path.split('\\')
         img_pth = r.path.split('/')
         print(img_pth)
 
